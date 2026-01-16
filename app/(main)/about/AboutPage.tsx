@@ -29,28 +29,28 @@ const OurStory = () => {
             Our Story
           </span>
 
-          <h2 className="text-4xl md:text-6xl  text-gray-900 font-medium leading-tight">
+          <h2 className="text-4xl md:text-7xl  tracking-wide  text-gray-900 font-semibold leading-tight">
             The Meaning <br />
             Behind <br />
-            <span className="text-orange-500 italic">The Name.</span>
+            <span className="text-orange-500 ">The Name.</span>
           </h2>
 
-          <div className="space-y-6 text-gray-600  text-lg leading-relaxed">
+          <div className="space-y-6 text-gray-900  text-lg leading-relaxed">
             <p className="font-medium">
-              <strong className="text-orange-500 text-xl ">AYADI</strong>{" "}
+              <strong className="text-orange-500 text-2xl ">AYADI</strong>{" "}
               meaning "Hands" in Arabic ,(أيادي) symbolizes the personal touch,
               the giving nature, and the craftsmanship woven into every dish we
               create.
             </p>
 
-            <p className="text-base md:text-base">
+            <p className="text-base text-gray-600">
               Born from a deep love for Saudi hospitality, AYADI was established
               to bridge the gap between traditional home-cooked generosity and
               modern, effortless elegance. We believe that hosting should be a
               joy, not a burden.
             </p>
 
-            <p className="text-base md:text-base">
+            <p className="text-base text-gray-600">
               Our team consists of passionate chefs and event stylists who
               understand the nuances of a Saudi gathering. From the scent of
               cardamom in our coffee to the precise arrangement of our roaming
@@ -58,16 +58,15 @@ const OurStory = () => {
               embracing contemporary sophistication.
             </p>
 
-            <hr className="border-gray-800 w-1/3 my-6" />
+            <hr className="border-[1px] border-gray-800 w-full my-6" />
 
-            <blockquote className=" text-2xl md:text-3xl text-gray-800 leading-snug pt-4">
+            <blockquote className="font-light text-2xl md:text-3xl italic text-black leading-snug pt-4">
               "We don't just cater events. We craft{" "}
-              <span className="text-ayadi-accent italic">memories</span>"
+              <span className="  text-orange-500">memories</span>"
             </blockquote>
           </div>
         </div>
 
-        {/* Images Collage */}
         {/* Images Collage */}
         <div className="order-1 lg:order-2 relative h-[500px] md:h-[600px] lg:h-[700px] w-full flex items-center justify-center lg:justify-end">
           {/* Main Large Image (Interior) - Static */}
@@ -164,7 +163,7 @@ const OurPromiseCard = ({
 }) => (
   <div className="bg-[#4A4747] p-8 md:p-10 flex flex-col items-start space-y-4 hover:border-ayadi-accent/50 transition duration-300 group h-full rounded">
     <Icon className="w-10 h-10 text-ayadi-accent stroke-[1.5] mb-2 group-hover:scale-110 transition-transform duration-300 text-orange" />
-    <h3 className="text-2xl  text-neutral-200 font-medium">{title}</h3>
+    <h3 className="text-2xl  text-white font-medium">{title}</h3>
     <p className="text-neutral-400  leading-relaxed text-sm ">{description}</p>
   </div>
 );
@@ -174,14 +173,11 @@ const OurPromise = () => {
     <section className="bg-ayadi-dark py-20 px-6 md:px-12 lg:px-24 bg-[#403D3D] mb-20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="uppercase text-xs tracking-[0.2em] text-green-500 font-bold block mb-4">
+          <span className="uppercase text-sm tracking-[0.2em] text-green-500 font-bold block mb-4">
             What Drives Us
           </span>
-          <h2 className="text-5xl md:text-6xl  text-white">
-            Our{" "}
-            <span className="text-ayadi-accent italic text-orange-500">
-              Promise
-            </span>
+          <h2 className="text-5xl md:text-6xl  text-white font-bold">
+            Our <span className=" text-orange-500">Promise</span>
           </h2>
         </div>
 

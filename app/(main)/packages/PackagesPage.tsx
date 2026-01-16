@@ -1,4 +1,5 @@
 import { ArrowRight, User } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const PackagesPage: React.FC = () => {
@@ -7,10 +8,8 @@ const PackagesPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-7xl font-tinos text-black">
-            Set Packages
-          </h2>
-          <p className="text-gray-500 text-lg md:text-xl font-light max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-7xl text-black">Set Packages</h2>
+          <p className="text-gray-500 text-lg md:text-xl font-light max-w-7xl mx-auto">
             Choose from our carefully curated packages, each designed to create
             unforgettable dining experiences
           </p>
@@ -35,7 +34,7 @@ const PackagesPage: React.FC = () => {
             {/* Content Section */}
             <div className="p-8 space-y-6">
               <div className="space-y-2">
-                <h3 className="text-2xl font-serif text-gray-900">
+                <h3 className="text-2xl  text-gray-900">
                   Classic Family Feast
                 </h3>
                 <p className="text-gray-500 text-[15px] leading-relaxed">
@@ -45,7 +44,7 @@ const PackagesPage: React.FC = () => {
 
               {/* Price */}
               <div className="flex items-baseline gap-1.5">
-                <span className="text-4xl arimo text-amber-700 font-normal">
+                <span className="text-4xl  text-amber-700 font-normal">
                   1250
                 </span>
                 <span className="text-gray-500 text-sm font-medium uppercase tracking-wide">
@@ -74,10 +73,13 @@ const PackagesPage: React.FC = () => {
               </div>
 
               {/* Button */}
-              <button className="w-full bg-green-500 hover:bg-green-700 text-white py-3.5 rounded-md font-medium transition-colors flex items-center justify-center gap-2 mt-2">
+              <Link
+                href="/build-your-menu?mode=package"
+                className="w-full bg-green-500 hover:bg-green-700 text-white py-3.5 rounded-md font-medium transition-colors flex items-center justify-center gap-2 mt-2"
+              >
                 Select Package
                 <ArrowRight size={18} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

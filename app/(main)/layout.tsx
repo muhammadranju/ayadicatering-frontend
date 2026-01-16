@@ -1,19 +1,19 @@
+import MainFooter from "@/components/shared/MainFooter";
 import MainHeader from "@/components/shared/MainHeader";
 import StoreProvider from "@/lib/redux/provider";
 import type { Metadata } from "next";
-import { Inter, Source_Code_Pro } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
 import "../globals.css";
-import MainFooter from "@/components/shared/MainFooter";
 
 // Importing the Inter font
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+// const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 // Importing a monospace font (Source Code Pro as an example)
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
-  subsets: ["latin"],
-});
+// const sourceCodePro = Source_Code_Pro({
+//   variable: "--font-source-code-pro",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "AYADI - Food Booking Platform",
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     siteName: "AYADI - Food Booking Platform",
   },
 };
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -41,9 +42,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${sourceCodePro.variable} antialiased bg-[#F2EEE6]`}
-      >
+      <body className={`${montserrat.className} antialiased bg-[#F2EEE6]`}>
         <StoreProvider>
           <MainHeader />
           <div className="flex flex-col justify-between min-h-screen">

@@ -5,10 +5,16 @@ export const metadata = {
   description: "Build Your Menu ",
 };
 
-function page() {
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+function page({ searchParams }: PageProps) {
+  const isPackageMode = searchParams?.mode === "package";
+
   return (
     <>
-      <BuildYourMenu />
+      <BuildYourMenu isPackageMode={isPackageMode} />
     </>
   );
 }

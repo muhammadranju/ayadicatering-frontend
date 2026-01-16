@@ -1,46 +1,51 @@
 "use client";
+import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
-import { Plus, Minus, Phone } from "lucide-react";
-import { PiWhatsappLogo } from "react-icons/pi";
 import { FaWhatsapp } from "react-icons/fa6";
 
 // FAQ Data Structure
 const FAQS = [
   {
     id: "01",
-    question: "Which areas do you deliver to?",
+    question: "What is “Gatherings by Ayadi”?",
     answer:
-      "We currently deliver to all major metropolitan areas within the region. Please contact our support team for specific zoning inquiries.",
+      "Gatherings by Ayadi  is designed for sharing with family and friends. Each order arrives carefully packed and ready to place directly on your table, so you can focus on enjoying the moment. ",
   },
   {
     id: "02",
-    question: "Do you deliver outside your standard zones?",
+    question: "What’s included in “Gatherings by Ayadi”?",
     answer:
-      "Yes, we can arrange delivery outside our standard zones for an additional logistics fee based on the distance and order size.",
+      "Each menu includes six thoughtfully designed dishes to accommodate up to 10 guests, ready to be served. Effortless for you, beautiful for your guests.",
   },
   {
     id: "03",
-    question: "What is your cancellation policy?",
+    question: "Does Ayadi offer same day ordering?",
     answer:
-      "Cancellations made 72 hours prior to the event are eligible for a full refund. Cancellations within 24-72 hours incur a 50% charge.",
+      "Yes, absolutely. To give every meal the attention it deserves, we ask for a minimum of 5 hours from confirmation to delivery",
   },
   {
     id: "04",
-    question: "Can I make changes after confirming my order?",
+    question: "How is my order delivered?",
     answer:
-      "Minor adjustments to the menu or guest count can be made up to 48 hours before your scheduled event delivery time.",
+      "Every order is handled with attention and care. Your dishes are delivered on time, in temperature-controlled boxes to preserve freshness and flavor.",
   },
   {
     id: "05",
-    question: "Are halal options available?",
+    question: "Can I make changes after I’ve placed my order?",
     answer:
-      "Yes, all our meat is Halal certified, and we adhere to strict preparation guidelines to ensure compliance.",
+      "If you would like to adjust your order, please contact  us as soon as possible and we will do our best to accommodate. Once preparation has begun, changes may not be available.",
   },
   {
     id: "06",
-    question: "Do you accommodate dietary restrictions or allergies?",
+    question: "What if I need to cancel my order?",
     answer:
-      "Yes, we offer options for common dietary requirements, including vegetarian and allergy-aware dishes. Please inform us during booking.",
+      "We understand that plans can change. Cancellations made more than 48 hours before delivery can be redeemed as credit to use within 2 months. Please note that any cancellations made within 48 hours are not possible, as preparations will already be underway.",
+  },
+  {
+    id: "07",
+    question: "How can I reach Ayadi?",
+    answer:
+      "The Ayadi concierge team is delighted to serve you daily from 10 AM to 10 PM. Reach us through WhatsApp, and we will guide you through every detail.",
   },
 ];
 

@@ -21,20 +21,13 @@ function HomePage() {
           <div className="lg:container md:max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
             {/* Left Content */}
             <div className="space-y-6 pt-10 md:pt-0">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-[1px] bg-gray-800"></div>
-                <span className="text-gray-800 text-sm md:text-base font-medium tracking-wide">
-                  Est. 2024
-                </span>
-              </div>
-
-              <h1 className="text-5xl md:text-6xl lg:text-7xl  text-gray-900 leading-tight">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 leading-tight">
                 Effortless
                 <br />
-                <span className="text-primary">Gatherings.</span>
+                <span className="text-primary italic">Gatherings.</span>
               </h1>
 
-              <p className="text-gray-500 text-lg md:text-xl max-w-md leading-relaxed font-light">
+              <p className="text-gray-500 text-lg md:text-xl max-w-md leading-relaxed font-extralight">
                 With AYADI, hosting is stress-free. A few simple steps, and your
                 gathering comes together beautifully.
               </p>
