@@ -6,70 +6,71 @@
     "gallery": "المعرض",
     "faq": "الأسئلة الشائعة",
 
-    "bookNow": "",
-    "language": "",
-    "english": "",
-    "arabic": ""
+    "contact": "اتصل بنا",
+    "bookNow": "احجز الآن",
+    "language": "اللغة",
+    "english": "الإنجليزية",
+    "arabic": "العربية"
   },
   "home": {
-    "heroTitle": "",
-    "heroTitleSpan": "",
-    "heroSubtitle": "",
-    "modernHospitality": "",
-    "chooseTitle": "",
-    "chooseSubtitle": "",
-    "buildOwnTitle": "",
-    "buildOwnDesc": "",
-    "buildOwnBtn": "",
-    "setMenusTitle": "",
-    "setMenusDesc": "",
-    "setMenusBtn": ""
+    "heroTitle": "بلا جهد",
+    "heroTitleSpan": "تجمعات",
+    "heroSubtitle": "مع أيادي، الاستضافة بلا توتر. بضعة خطوات بسيطة، وتصبح فعاليتك منظمة بشكل رائع.",
+    "modernHospitality": "الضيافة الحديثة",
+    "chooseTitle": "اختر طريقتك",
+    "chooseSubtitle": "قم بإنشاء قائمتك الخاصة أو اختر من قوائمنا المختارة بعناية",
+    "buildOwnTitle": "قم بإنشاء قائمتك",
+    "buildOwnDesc": "اختر 3 أطباق كلاسيكية، 1 سلطة، و2 من الأطباق المميزة لإنشاء قائمتك المثالية",
+    "buildOwnBtn": "ابدأ الاختيار",
+    "setMenusTitle": "القوائم الجاهزة",
+    "setMenusDesc": "قوائم مختارة بعناية من قبل طهاتنا للطلب السريع والسهل",
+    "setMenusBtn": "عرض القوائم الجاهزة"
   },
   "about": {
-    "storyLabel": "",
-    "meaningTitle": "",
-    "meaningTitle2": "",
-    "meaningTitleSpan": "",
-    "meaningDesc1": "",
-    "meaningDesc2": "",
-    "meaningDesc3": "",
-    "quote": "",
-    "promiseLabel": "",
-    "promiseTitle": "",
+    "storyLabel": "قصتنا",
+    "meaningTitle": "المعنى",
+    "meaningTitle2": "وراء",
+    "meaningTitleSpan": "الاسم.",
+    "meaningDesc1": "<0>أيادي</0> تعني \"الأيادي\" بالعربية، وترمز إلى اللمسة الشخصية، وطبيعة العطاء، والحرفية المتقنة في كل طبق نقوم بإعداده.",
+    "meaningDesc2": "وُلدت أيادي من حب عميق للضيافة السعودية، وتم تأسيسها لربط الفجوة بين كرم الطهي المنزلي التقليدي والأناقة العصرية السهلة. نحن نؤمن أن الاستضافة يجب أن تكون فرحة، لا عبئًا.",
+    "meaningDesc3": "يتألف فريقنا من طهاة وشخصيات تصميم فعاليات شغوفين يفهمون تفاصيل التجمعات السعودية. من رائحة الهيل في قهوتنا إلى ترتيب صوانينا المتجولة بدقة، يتم تنسيق كل تفصيلة لتكريم تراثنا مع تبني الأناقة المعاصرة.",
+    "quote": "\"نحن لا نقدم الطعام للفعاليات فقط، بل نصنع <0>ذكريات</0>\"",
+    "promiseLabel": "ما يحفزنا",
+    "promiseTitle": "وعدنا",
     "promiseTitleSpan": "",
-    "promise1Title": "",
-    "promise1Desc": "",
-    "promise2Title": "",
-    "promise2Desc": "",
-    "promise3Title": "",
-    "promise3Desc": ""
+    "promise1Title": "استضافة بلا توتر",
+    "promise1Desc": "نُبسّط تجربة التخطيط والاستضافة من خلال قوائم جاهزة للطلب، واختيار الحزم، والتنفيذ في الوقت المحدد، لتتمكن من التركيز على ضيوفك دون القلق بشأن اللوجستيات.",
+    "promise2Title": "إبداع متقن",
+    "promise2Desc": "نقدم قوائم مطوّرة بعناية مع عرض أنيق وتركيز على الجودة والطعم، مما يعكس العناية والاهتمام في كل تفصيلة.",
+    "promise3Title": "تقديم بدفء",
+    "promise3Desc": "نقدم تجارب تتنبأ باحتياجات ضيوفك، مع مراعاة الثقافة والحس المعاصر، تاركين انطباعًا دائمًا من الدفء والضيافة."
   },
   "gallery": {
-    "recentTitle": "",
-    "recentTitleSpan": "",
-    "recentDesc": "",
-    "voiceLabel": "",
-    "voiceSpan": "",
+    "recentTitle": "أعمالنا",
+    "recentTitleSpan": "الأخيرة",
+    "recentDesc": "كل لقطة تحكي قصة الكمال",
+    "voiceLabel": "صوت",
+    "voiceSpan": "التميز",
     "testimonials": {
       "1": {
-        "text": "",
-        "author": "",
-        "role": ""
+        "text": "\"حولت أيادي حفل زفافنا إلى رحلة طهي لا تُنسى. كانت العناية بالتفاصيل استثنائية، ولا يزال ضيوفنا يتحدثون عنها كأفضل حدث حضروه.\"",
+        "author": "الأميرة نورة آل سعود",
+        "role": "احتفال زفاف ملكي"
       },
       "2": {
-        "text": "",
-        "author": "",
-        "role": ""
+        "text": "\"خدمة لا تشوبها شائبة، عرض رائع، ونكهات أبهرت ضيوفنا الدوليين. وضعت أيادي معيارًا جديدًا للفعاليات الدبلوماسية في المملكة.\"",
+        "author": "السفير خالد الفهد",
+        "role": "عشاء دبلوماسي G20"
       },
       "3": {
-        "text": "",
-        "author": "",
-        "role": ""
+        "text": "\"من الفكرة إلى التنفيذ، تجاوزت أيادي كل التوقعات. فهموا جوهر الضيافة السعودية ورفعوه إلى مستوى فنّي.\"",
+        "author": "الشيخ محمد الراجحي",
+        "role": "احتفال عقار خاص"
       }
     },
-    "stressFreeTitle": "",
-    "stressFreeDesc": "",
-    "whatsapp": ""
+    "stressFreeTitle": "الاستضافة لا يجب أن تكون مرهقة",
+    "stressFreeDesc": "مع أيادي، الاستضافة بلا توتر. نحن نتولى التفاصيل، لتستمتع باللحظات المهمة.",
+    "whatsapp": "واتساب"
   },
   "faq": {
     "heroTitle": "الأسئلة الشائعة",
@@ -108,37 +109,39 @@
     }
   },
   "menu": {
-    "title": "",
-    "subtitle": "",
-    "selectedAddons": "",
-    "noAddons": "",
-    "totalAddons": "",
-    "back": "",
-    "next": "",
+    "title": "قم بإنشاء قائمتك",
+    "subtitle": "تقدم تجمعات أيادي خدمة تصل إلى 10 ضيوف. اختر تركيبتك المثالية.",
+    "selectedAddons": "الإضافات المختارة",
+    "noAddons": "لم يتم اختيار أي إضافات",
+    "totalAddons": "إجمالي الإضافات",
+    "back": "عودة",
+    "next": "التالي",
     "steps": {
-      "salad": "",
-      "saladSubtitle": "",
-      "classics": "",
-      "classicsSubtitle": "",
-      "signatures": "",
-      "signaturesSubtitle": "",
-      "addons": "",
-      "addonsSubtitle": ""
+      "salad": "سلطة",
+      "saladSubtitle": "اختر سلطة واحدة",
+      "classics": "الأطباق الكلاسيكية",
+      "classicsSubtitle": "اختر 3 مقبلات",
+      "signatures": "الأطباق المميزة",
+      "signaturesSubtitle": "اختر 2 من الأطباق الرئيسية",
+      "addons": "إضافات",
+      "addonsSubtitle": "اختر ما يصل إلى 6 إضافات اختيارية"
     }
   },
   "packages": {
-    "title": "",
-    "subtitle": "",
-    "guests": "",
-    "classicTitle": "",
-    "classicDesc": "",
-    "menuIncludes": "",
-    "selectPackage": "",
+    "title": "الباقات الجاهزة",
+    "subtitle": "اختر من باقاتنا المختارة بعناية، كل واحدة مصممة لتقديم تجربة طعام لا تُنسى",
+    "guests": "10 ضيوف",
+    "classicTitle": "وليمة عائلية كلاسيكية",
+    "classicDesc": "ولائم عائلية مختارة لتجمعات حميمة",
+    "menuIncludes": "تتضمن القائمة:",
+    "selectPackage": "اختر الباقة",
     "tags": {
-      "appetizers": "",
-      "salads": "",
-      "mainCourses": "",
-      "more": ""
+      "appetizers": "المقبلات",
+      "salads": "السلطات",
+      "mainCourses": "الأطباق الرئيسية",
+      "more": "+2 إضافات"
     }
-  }
+  },
+
+  "footer": {}
 }
