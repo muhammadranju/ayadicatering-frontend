@@ -1,16 +1,19 @@
 "use client";
-import { Award, Heart, Sparkles } from "lucide-react";
+import { Award, Heart, Sparkles, LucideProps } from "lucide-react";
+import React from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { Trans, useTranslation } from "react-i18next";
 
 const Hero = () => {
   return (
     <div className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gray-100">
       {/* Background Image: Using a baking/cookies image similar to the reference */}
-      <img
+      <Image
         src="/bg/about-hero.png"
         alt="Cookies and Recipe Book"
-        className="w-full h-full object-cover object-center opacity-90"
+        fill
+        className="object-cover object-center opacity-90"
       />
 
       {/* Overlay gradient to soften */}
@@ -74,10 +77,11 @@ const OurStory = () => {
         <div className="order-1 lg:order-2 relative h-[500px] md:h-[600px] lg:h-[700px] w-full flex items-center justify-center lg:justify-end">
           {/* Main Large Image (Interior) - Static */}
           <div className="relative w-full max-w-md md:max-w-lg h-[400px] md:h-[500px] lg:h-[550px] bg-gray-200 overflow-hidden shadow-xl z-10 self-start">
-            <img
+            <Image
               src="/bg/about-story.jpg"
               alt="Ornate Arabic Interior"
-              className="w-full h-full object-cover rounded"
+              fill
+              className="object-cover rounded"
             />
           </div>
 
@@ -98,10 +102,11 @@ const OurStory = () => {
                 }}
                 transition={{ type: "spring", stiffness: 120, damping: 20 }}
               >
-                <img
+                <Image
                   src="https://plus.unsplash.com/premium_photo-1698867575634-d39ef95fa6a7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Arabic Food Spread"
-                  className="w-full h-full object-cover rounded"
+                  fill
+                  className="object-cover rounded"
                 />
               </motion.div>
 
@@ -119,10 +124,11 @@ const OurStory = () => {
                   delay: 0.05,
                 }}
               >
-                <img
+                <Image
                   src="https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Sharing Food"
-                  className="w-full h-full object-cover rounded"
+                  fill
+                  className="object-cover rounded"
                 />
               </motion.div>
 
@@ -141,10 +147,11 @@ const OurStory = () => {
                 }}
                 transition={{ type: "spring", stiffness: 200, damping: 15 }}
               >
-                <img
+                <Image
                   src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop"
                   alt="Hands holding bread black and white"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 contrast-125 rounded-lg"
+                  fill
+                  className="object-cover grayscale group-hover:grayscale-0 contrast-125 rounded-lg"
                 />
               </motion.div>
             </motion.div>
@@ -160,7 +167,7 @@ const OurPromiseCard = ({
   title,
   description,
 }: {
-  icon: any;
+  icon: React.ComponentType<LucideProps>;
   title: string;
   description: string;
 }) => (

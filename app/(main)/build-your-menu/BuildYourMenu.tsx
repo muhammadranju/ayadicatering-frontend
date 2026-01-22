@@ -21,10 +21,12 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
 
   // Update step if prop changes (though usually initial load matters most)
   useEffect(() => {
+    // Scroll to top when step changes
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (isPackageMode && step === 0) {
       setStep(1);
     }
-  }, [isPackageMode]);
+  }, [step, isPackageMode]);
 
   // --- STEP 0: Menu Selection ---
   const [selectedSalad, setSelectedSalad] = useState<string | null>(null);
@@ -115,16 +117,6 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     if (step > (isPackageMode ? 1 : 0)) setStep(step - 1);
   };
 
-  const activeStepForStepper = isPackageMode ? step - 1 : step;
-  // If package mode, we might want to hide Step 0 from stepper or adjust index?
-  // The user didn't explicitly say to change the stepper, but if they skip step 0, Step 1 becomes the first step *visually*?
-  // Or do they just land on Step 1 (Date) and see "Step 2 of 4"(or similar)?
-  // Usually "Build Your Menu" (Step 0) is skipped.
-  // I will leave Step Index as is for now, but if they are in package mode, maybe we strictly start at Step 1.
-  // The Stepper component takes `currentStep`. If we are at Step 1, it highlights Step 1.
-  // If we want to hide Step 0 from stepper in Package Mode, we would need to filter `STEPS`.
-  // Assumption: Keep steps as is, just start at Step 1.
-
   return (
     <div className=" min-h-screen pb-40 max-w-7xl mx-auto">
       {/* Header */}
@@ -211,7 +203,7 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
                             key={addon.id}
                             className="flex justify-between text-sm text-gray-600"
                           >
-                            <span>{addon.name}</span>
+                            <span>{t(addon.name)}</span>
                             {/* <span>{addon.price} SAR</span> */}
                           </div>
                         ))}
