@@ -5,6 +5,7 @@
     "about": "About",
     "gallery": "Gallery",
     "faq": "FAQ",
+    "whatsapp": "Whatsapp",
     "contact": "Contact",
     "bookNow": "Book Now",
     "language": "Language",
@@ -67,7 +68,8 @@
         "role": "Private Estate Celebration"
       }
     },
-    "stressFreeTitle": "HOSTING DOESN'T HAVE TO BE STRESSFUL",
+    "stressFreeTitle": "HOSTING DOESN'T",
+    "stressFreeTitle2": "HAVE TO BE STRESSFUL",
     "stressFreeDesc": "With AYADI, hosting is stress-free. We take care of the details, so you can enjoy the moments that matter.",
     "whatsapp": "Whatsapp"
   },

@@ -7,17 +7,44 @@ import { Trans, useTranslation } from "react-i18next";
 
 const Hero = () => {
   return (
-    <div className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gray-100">
-      {/* Background Image: Using a baking/cookies image similar to the reference */}
+    <div className="relative w-full h-[60vh] md:h-[95vh] overflow-hidden bg-gray-900">
+      {/* Background Image */}
       <Image
-        src="/bg/about-hero.png"
+        src="/bg/about-hero-2.png"
         alt="Cookies and Recipe Book"
         fill
-        className="object-cover object-center opacity-90"
+        className="object-cover object-center"
+        priority
       />
 
-      {/* Overlay gradient to soften */}
-      <div className="absolute inset-0 bg-white/30 mix-blend-overlay"></div>
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 "></div>
+
+      {/* Centered Content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 pb-16">
+        {/* EST Year */}
+        <span className="text-orange-500 text-xs md:text-lg tracking-[0.4em] font-bold uppercase mb-4 md:mb-6 border-b-4 border-orange-500">
+          Est. 2024
+        </span>
+
+        {/* Main Title Group */}
+        <div className="relative flex flex-col items-center">
+          <h1 className="text-6xl md:text-8xl lg:text-[15rem] leading-none font-normal tracking-wide text-white">
+            AYADI
+          </h1>
+          <h2 className="text-3xl md:text-5xl text-white font-black mt-2 md:mt-4 ">
+            أيادي
+          </h2>
+        </div>
+      </div>
+
+      {/* Bottom Description */}
+      <div className="absolute bottom-10 md:bottom-40 left-0 right-0 flex justify-center z-10 px-6">
+        <p className="text-white text-center max-w-5xl text-sm md:text-lg lg:text-2xl font-normal leading-relaxed tracking-wide">
+          Where tradition meets artistry. Where every dish tells a story. Where
+          Saudi hospitality is elevated to an unforgettable experience.
+        </p>
+      </div>
     </div>
   );
 };

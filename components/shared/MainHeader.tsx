@@ -73,10 +73,10 @@ const MainHeader: React.FC = () => {
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center border border-green-500 rounded-full px-3 py-1 cursor-pointer hover:border-gray-400 transition-colors"
+                className="flex items-center gap-2 border border-green-500 rounded-full px-3 py-1 cursor-pointer hover:border-gray-400 transition-colors"
                 onClick={() => setIsLangOpen(!isLangOpen)}
               >
-                <span className="font-bold text-sm mr-2 text-gray-700">
+                <span className="font-bold text-sm text-gray-700">
                   {currentFlag.label}
                 </span>
                 <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 flex-shrink-0 relative">
@@ -129,7 +129,7 @@ const MainHeader: React.FC = () => {
 
             {/* CTA Button */}
             <Button className="bg-green-500 hover:bg-green-600 text-white px-6 py-5 rounded-sm font-medium transition-colors duration-200 shadow-sm">
-              Whatsapp <FaWhatsapp size={24} className="ml-2" />
+              {t("header.whatsapp")} <FaWhatsapp size={24} className="ml-2" />
             </Button>
           </div>
 
@@ -202,12 +202,10 @@ const MainHeader: React.FC = () => {
             <div className="relative z-50">
               <button
                 type="button"
-                className="w-full flex items-center justify-center border border-gray-300 rounded-full px-4 py-3 hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-full px-4 py-3 hover:bg-gray-50 transition-colors"
                 onClick={() => setIsLangOpen(!isLangOpen)}
               >
-                <span className="font-bold text-sm mr-2">
-                  {currentFlag.label}
-                </span>
+                <span className="font-bold text-sm">{currentFlag.label}</span>
                 <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200">
                   <Image
                     src={currentFlag.path}

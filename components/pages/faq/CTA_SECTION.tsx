@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import { FaWhatsapp } from "react-icons/fa6";
 
 function CTA_SECTION() {
+  const { t } = useTranslation();
   return (
     <section className="bg-green-500 lg:py-40 py-24 mb-20 relative overflow-hidden">
       {/* Decorative Background Elements */}
@@ -11,7 +13,7 @@ function CTA_SECTION() {
           width={400}
           height={400}
           src="/bg/gallery-2.png"
-          className=" h-full object-cover absolute"
+          className=" h-full object-cover absolute left-0"
           alt=""
         />
         <Image
@@ -25,16 +27,16 @@ function CTA_SECTION() {
 
       <div className="container mx-auto px-6 relative z-10 text-center">
         <h2 className="text-4xl md:text-6xl  text-white mb-6 tracking-wide leading-tight">
-          HOSTING DOESN&apos;T <br />
-          HAVE TO BE STRESSFUL
+          {t("gallery.stressFreeTitle")}
+          <br />
+          {t("gallery.stressFreeTitle2")}
         </h2>
         <p className="text-white/90 text-lg md:text-xl font-sans max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-          With AYADI, hosting is stress-free. We take care of the details, so
-          you can enjoy the moments that matter.
+          {t("gallery.stressFreeDesc")}
         </p>
 
         <button className="bg-orange-700 hover:bg-orange-600 text-white px-8 py-3 rounded-sm font-medium transition-colors duration-300 flex items-center gap-2 mx-auto cursor-pointer">
-          Whatsapp <FaWhatsapp size={24} />
+          {t("gallery.whatsapp")} <FaWhatsapp size={24} />
         </button>
       </div>
     </section>
