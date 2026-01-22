@@ -12,13 +12,13 @@ function HomePage() {
       <div className="">
         <section className="relative  lg:container md:max-w-7xl mx-auto flex items-center overflow-hidden py-5 lg:py-24 md:py-20 ">
           {/* Background Watermark Letter "A" - Stylized */}
-          <div className="absolute top-1/2 left-0 md:left-20 transform -translate-y-1/2 opacity-[0.03] select-none pointer-events-none">
-            <span className="text-[400px] md:text-[600px] font-tinos text-primary leading-none">
+          <div className="absolute top-1/2 left-0 md:left-20 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none">
+            <span className="text-[400px] md:text-[600px] text-primary font-medium leading-none">
               A
             </span>
           </div>
           <div className="absolute top-1/2 left-40 md:left-110 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none">
-            <span className="text-[400px] md:text-[600px] font-tinos text-primary leading-none">
+            <span className="text-[400px] md:text-[600px] text-primary font-medium leading-none">
               Y
             </span>
           </div>

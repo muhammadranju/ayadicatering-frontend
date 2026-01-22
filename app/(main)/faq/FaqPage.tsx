@@ -1,5 +1,6 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -39,6 +40,35 @@ const FaqPage: React.FC = () => {
           </p>
         </div>
       </div>
+
+      {/* Still Have Questions Section */}
+      <section className="relative bg-charcoal py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="relative w-full h-full">
+            <Image
+              src="/logo/logo.png"
+              alt="Decoration"
+              fill
+              className="object-contain opacity-10"
+            />
+          </div>
+        </div>
+        <div className="text-center relative z-10 px-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            {t("faq.stillHaveQuestions")}{" "}
+            <span className="font-serif italic text-yellow-300">
+              {t("faq.sectionTitleSpan")}
+            </span>
+          </h2>
+          <p className="text-white/80 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+            Can&apos;t find the answer you&apos;re looking for? Please chat to
+            our friendly team.
+          </p>
+          <button className="bg-amber-700 hover:bg-amber-600 text-white px-8 py-3 rounded-sm font-medium transition-colors duration-300 flex items-center gap-2 mx-auto cursor-pointer">
+            Whatsapp <FaWhatsapp size={24} />
+          </button>
+        </div>
+      </section>
 
       {/* 2. FAQ SECTION */}
       <div className=" py-20 px-6 md:px-12 lg:px-24">
@@ -108,22 +138,39 @@ const FaqPage: React.FC = () => {
       <section className="bg-green-500 lg:py-40 py-24 mb-20 relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-          <img
+          {/* Image 1: Bottom Layer */}
+          <div className="absolute top-10 left-10 md:top-20 md:left-20 w-48 h-64 md:w-64 md:h-80 -rotate-6 z-10 shadow-lg transition-transform duration-500 hover:rotate-0 hover:scale-105">
+            <Image
+              src="/gallery/1.png"
+              alt="Highlight 1"
+              fill
+              className="object-cover rounded-lg"
+            />
+          </div>
+          <Image
             src="/bg/gallery-2.png"
             className=" h-full object-cover absolute"
             alt=""
+            fill
           />
-          <img
+          <Image
             src="/bg/gallery-1.png"
             className=" h-full object-cover right-0 absolute"
             alt=""
+            fill
           />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <img src="/bg/gallery-bg.png" alt="" />
+          <Image
+            src="/bg/gallery-bg.png"
+            alt=""
+            width={600}
+            height={400}
+            className="mx-auto mb-6"
+          />
           <h2 className="text-4xl md:text-6xl  text-white mb-6 tracking-wide leading-tight">
-            HOSTING DOESN'T <br />
+            HOSTING DOESN&apos;T <br />
             HAVE TO BE STRESSFUL
           </h2>
           <p className="text-white/90 text-lg md:text-xl font-sans max-w-2xl mx-auto mb-10 font-light leading-relaxed">

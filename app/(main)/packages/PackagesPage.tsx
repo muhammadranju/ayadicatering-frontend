@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -25,10 +26,11 @@ const PackagesPage: React.FC = () => {
           <div className="w-full max-w-[400px] border border-gray-100 rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow duration-300">
             {/* Image Section */}
             <div className="relative h-64">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=2070&auto=format&fit=crop"
                 alt="Classic Family Feast"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
               <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-[2px] text-white px-3 py-1.5 rounded-md flex items-center gap-2 text-sm font-medium">
                 <User size={16} strokeWidth={2} />
