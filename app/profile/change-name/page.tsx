@@ -1,10 +1,15 @@
 import { Metadata } from "next";
+import { ChangeNamePage } from "./ChangeNamePage";
 export const metadata: Metadata = {
   title: "Change Name - TechAdvantage",
 };
 
 const page = () => {
-  return <div className="min-h-screen bg-neutral-50 ">Profile Change Name</div>;
+  return (
+    <>
+      <ChangeNamePage />
+    </>
+  );
 };
 
 export default page;

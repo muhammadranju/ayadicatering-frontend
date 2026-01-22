@@ -1,12 +1,15 @@
 import { Metadata } from "next";
+import { ChangePasswordPage } from "./ChangePasswordPage";
 export const metadata: Metadata = {
   title: "Change Password - TechAdvantage",
 };
 
-const ChangePasswordPage = () => {
+const page = () => {
   return (
-    <div className="min-h-screen bg-neutral-50 ">Profile Change Password</div>
+    <div className="min-h-screen bg-neutral-50 ">
+      <ChangePasswordPage />
+    </div>
   );
 };
 
-export default ChangePasswordPage;
+export default page;
