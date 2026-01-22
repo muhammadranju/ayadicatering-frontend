@@ -2,6 +2,7 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -78,11 +79,12 @@ const MainHeader: React.FC = () => {
                 <span className="font-bold text-sm mr-2 text-gray-700">
                   {currentFlag.label}
                 </span>
-                <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                  <img
+                <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 flex-shrink-0 relative">
+                  <Image
                     src={currentFlag.path}
                     alt={`${currentFlag.name} flag`}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
               </button>
@@ -109,11 +111,12 @@ const MainHeader: React.FC = () => {
                           setIsLangOpen(false);
                         }}
                       >
-                        <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 mr-3">
-                          <img
+                        <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 mr-3 relative">
+                          <Image
                             src={flag.path}
                             alt={`${flag.name} flag`}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
                           />
                         </div>
                         <span>{flag.name}</span>
@@ -206,10 +209,12 @@ const MainHeader: React.FC = () => {
                   {currentFlag.label}
                 </span>
                 <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200">
-                  <img
+                  <Image
                     src={currentFlag.path}
-                    alt=""
+                    alt={`${currentFlag.name} flag`}
                     className="w-full h-full object-cover"
+                    width={36} // Added width and height for Image component
+                    height={36}
                   />
                 </div>
               </button>
@@ -234,11 +239,12 @@ const MainHeader: React.FC = () => {
                           setIsLangOpen(false);
                         }}
                       >
-                        <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 mr-3">
-                          <img
+                        <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 mr-3 relative">
+                          <Image
                             src={flag.path}
-                            alt=""
-                            className="w-full h-full object-cover"
+                            alt={`${flag.name} flag`}
+                            className="object-cover"
+                            fill // Use fill for responsive image within parent div
                           />
                         </div>
                         <span>{flag.name}</span>

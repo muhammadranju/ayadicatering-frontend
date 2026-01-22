@@ -3,8 +3,10 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import LogoComponent from "../logo/Logo";
+import { useTranslation } from "react-i18next";
 
 const MainFooter: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-orange-500 text-white pt-12 pb-8 md:pt-20">
       <div className="container mx-auto px-4 md:px-6 md:max-w-7xl lg:container">
@@ -13,8 +15,7 @@ const MainFooter: React.FC = () => {
           <div className="space-y-4 md:space-y-6">
             <LogoComponent path="/logo/logo-2.png" />
             <p className="text-white lg:text-sm text-base leading-relaxed max-w-xs mt-5">
-              Ayadi brings the warmth and generosity of modern Saudi hospitality
-              to your home, effortless, beautiful, and full of care.
+              {t("footer.paragraph")}
             </p>
             <div className="flex gap-6 md:gap-4">
               <a
@@ -44,7 +45,7 @@ const MainFooter: React.FC = () => {
           {/* Quick Links */}
           <div>
             <h3 className="text-xs font-bold tracking-wider text-white uppercase mb-6 md:mb-8">
-              Quick Links
+              {t("footer.quickLinks")}
             </h3>
             <ul className="space-y-3 md:space-y-4 lg:text-sm text-base text-white">
               <li>
@@ -52,7 +53,7 @@ const MainFooter: React.FC = () => {
                   href="/about"
                   className="hover:text-white transition-colors"
                 >
-                  About
+                  {t("footer.about")}
                 </Link>
               </li>
               <li>
@@ -60,7 +61,7 @@ const MainFooter: React.FC = () => {
                   href="/build-your-menu"
                   className="hover:text-white transition-colors"
                 >
-                  Menu
+                  {t("footer.menu")}
                 </Link>
               </li>
               <li>
@@ -68,7 +69,7 @@ const MainFooter: React.FC = () => {
                   href="/gallery"
                   className="hover:text-white transition-colors"
                 >
-                  Gallery
+                  {t("footer.gallery")}
                 </Link>
               </li>
             </ul>
@@ -77,7 +78,7 @@ const MainFooter: React.FC = () => {
           {/* Contact */}
           <div>
             <h3 className="text-xs font-bold tracking-wider text-white uppercase mb-6 md:mb-8">
-              Contact
+              {t("footer.contact")}
             </h3>
             <ul className="space-y-3 md:space-y-4 lg:text-sm text-base text-white">
               <li>+966 55 225 0081</li>
@@ -89,7 +90,7 @@ const MainFooter: React.FC = () => {
                   info@ayadicatering.com
                 </a>
               </li>
-              <li>Jeddah, Saudi Arabia</li>
+              <li>{t("footer.address")}</li>
             </ul>
           </div>
         </div>
@@ -97,7 +98,7 @@ const MainFooter: React.FC = () => {
         {/* Copyright */}
         <div className="border-t border-white/50 pt-6 lg:text-sm text-base text-center">
           <p className="text-white text-xs tracking-wider uppercase">
-            © 2024 - {new Date().getFullYear()} Ayadi. All Rights Reserved.
+            © 2024 - {new Date().getFullYear()} {t("footer.copyright")}
           </p>
         </div>
       </div>
