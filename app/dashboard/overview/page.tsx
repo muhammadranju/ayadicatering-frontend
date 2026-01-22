@@ -9,7 +9,8 @@ import {
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Overview - TechAdvantage",
+  title: "Overview - AYADI",
+  description: "Overview - AYADI",
 };
 
 const page = () => {

@@ -9,8 +9,8 @@ import "../globals.css";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dashboard Overview - TechAdvantage",
-  description: "Dashboard Overview",
+  title: "Dashboard Overview - AYADI",
+  description: "Dashboard Overview - AYADI",
 };
 
 export default function RootLayout({
