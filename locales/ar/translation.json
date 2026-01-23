@@ -185,87 +185,107 @@
       "salads": {
         "s1": {
           "name": "Dates & Fig Salad",
-          "desc": "Mixed greens with dates, dried figs, and crunchy almonds, with a vinaigrette dressing"
+          "desc": "Mixed greens with dates, dried figs, and crunchy almonds, with a vinaigrette dressing",
+          "price": "150 SAR"
         },
         "s2": {
           "name": "Watermelon Feta Salad",
-          "desc": "Arugula with watermelon and crumbled feta, with a habaq citrus dressing."
+          "desc": "Arugula with watermelon and crumbled feta, with a habaq citrus dressing.",
+          "price": "150 SAR"
         },
         "s3": {
           "name": "Crunchy Chickpea Salad",
-          "desc": "Iceberg lettuce topped with crunchy chickpeas, with a tahina-caesar dressing."
+          "desc": "Iceberg lettuce topped with crunchy chickpeas, with a tahina-caesar dressing.",
+          "price": "150 SAR"
         },
         "s4": {
           "name": "Charred Corn Salad",
-          "desc": "Baby spinach with charred corn, parmesan, toasted peanuts, basil-infused dressing"
+          "desc": "Baby spinach with charred corn, parmesan, toasted peanuts, basil-infused dressing",
+          "price": "150 SAR"
         }
       },
       "classics": {
         "c1": {
           "name": "Kubaibat Hail",
-          "desc": "Vine leaves pockets stuffed with spiced Saudi rice."
+          "desc": "Vine leaves pockets stuffed with spiced Saudi rice.",
+          "price": "180 SAR"
         },
         "c2": {
           "name": "Spinach & Cheese Pockets",
-          "desc": "Flaky pastry stuffed with spinach and cheese."
+          "desc": "Flaky pastry stuffed with spinach and cheese.",
+          "price": "180 SAR"
         },
         "c3": {
           "name": "Farmouza",
-          "desc": "Flaky pastry stuffed with minced beef and onions."
+          "desc": "Flaky pastry stuffed with minced beef and onions.",
+          "price": "180 SAR"
         },
         "c4": {
           "name": "Shish Barak",
-          "desc": "Minced meat dumplings in a yogurt garlic sauce."
+          "desc": "Minced meat dumplings in a yogurt garlic sauce.",
+          "price": "180 SAR"
         },
         "c5": {
           "name": "Creamy Mashed Potatoes",
-          "desc": "Smooth and buttery mashed potatoes"
+          "desc": "Smooth and buttery mashed potatoes",
+          "price": "180 SAR"
         },
         "c6": {
           "name": "Korean Chicken Drumsticks",
-          "desc": "Fried chicken drumsticks coated in a Korean-style chili sauce topped with sesame"
+          "desc": "Fried chicken drumsticks coated in a Korean-style chili sauce topped with sesame",
+          "price": "180 SAR"
         }
       },
       "signatures": {
         "m1": {
           "name": "Ayadi Signature Shrimp",
-          "desc": "Shrimp cooked in a tahina dill sauce and pickled onions."
+          "desc": "Shrimp cooked in a tahina dill sauce and pickled onions.",
+          "price": "220 SAR"
         },
         "m2": {
           "name": "Timman Vegetable",
-          "desc": "Temman rice with butternut squash, zucchini, and eggplants."
+          "desc": "Temman rice with butternut squash, zucchini, and eggplants.",
+          "price": "220 SAR"
         },
         "m3": {
           "name": "Chicken Saleeg",
-          "desc": "Creamy saleeg with chicken."
+          "desc": "Creamy saleeg with chicken.",
+          "price": "220 SAR"
         },
         "m4": {
           "name": "Lamb Qursan",
-          "desc": "Layers of zucchini, carrot, green beans, pumpkin."
+          "desc": "Layers of zucchini, carrot, green beans, pumpkin.",
+          "price": "220 SAR"
         },
         "m5": {
           "name": "Seabass Kozbariya",
-          "desc": "Seabass fillet in a coriander tomato sauce."
+          "desc": "Seabass fillet in a coriander tomato sauce.",
+          "price": "220 SAR"
         },
         "m6": {
           "name": "Lasagna",
-          "desc": "Lasagna with minced beef, tomato sauce, and béchamel"
+          "desc": "Lasagna with minced beef, tomato sauce, and béchamel",
+          "price": "220 SAR"
         },
         "m7": {
           "name": "Tuscan Chicken",
-          "desc": "Creamy chicken with mushroom, spinach, and cherry tomato confit"
+          "desc": "Creamy chicken with mushroom, spinach, and cherry tomato confit",
+          "price": "220 SAR"
         },
         "m8": {
           "name": "Braised Beef",
-          "desc": "Braised beef with caramelized onion reduction & thyme jus"
+          "desc": "Braised beef with caramelized onion reduction & thyme jus",
+          "price": "220 SAR"
         },
         "m9": {
           "name": "Pesto Orzo",
-          "desc": "Orzo pasta tossed with basil pesto and parmesan"
+          "desc": "Orzo pasta tossed with basil pesto and parmesan",
+          "price": "220 SAR"
         },
         "m10": {
           "name": "Seared Seabass",
-          "desc": "Seared seabass fillet with a lemon butter sauce and cherry tomatoes"
+          "desc": "Seared seabass fillet with a lemon butter sauce and cherry tomatoes",
+          "price": "220 SAR"
         }
       },
       "addons": {

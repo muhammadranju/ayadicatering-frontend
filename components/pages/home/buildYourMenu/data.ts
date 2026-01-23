@@ -5,6 +5,7 @@ const SALADS: MenuItem[] = [
     id: "s1",
     name: "menu.items.salads.s1.name",
     description: "menu.items.salads.s1.desc",
+    price: 150,
     category: "salad",
     image: "/items/salad/1.jpg",
   },
@@ -13,6 +14,7 @@ const SALADS: MenuItem[] = [
     name: "menu.items.salads.s2.name",
     description: "menu.items.salads.s2.desc",
     category: "salad",
+    price: 150,
     image: "/items/salad/2.jpg",
   },
   {
@@ -20,6 +22,7 @@ const SALADS: MenuItem[] = [
     name: "menu.items.salads.s3.name",
     description: "menu.items.salads.s3.desc",
     category: "salad",
+    price: 150,
     image: "/items/salad/3.jpg",
   },
   {
@@ -27,6 +30,7 @@ const SALADS: MenuItem[] = [
     name: "menu.items.salads.s4.name",
     description: "menu.items.salads.s4.desc",
     category: "salad",
+    price: 150,
     image: "/items/salad/4.jpg",
   },
 ];
@@ -39,6 +43,7 @@ const CLASSICS: MenuItem[] = [
     description: "menu.items.classics.c1.desc",
     category: "appetizer",
     isVegetarian: true,
+    price: 180,
     image: "/items/classics/1.jpg",
   },
   {
@@ -47,6 +52,7 @@ const CLASSICS: MenuItem[] = [
     description: "menu.items.classics.c2.desc",
     category: "appetizer",
     isVegetarian: true,
+    price: 180,
     image: "/items/classics/2.jpg",
   },
   {
@@ -54,6 +60,7 @@ const CLASSICS: MenuItem[] = [
     name: "menu.items.classics.c3.name",
     description: "menu.items.classics.c3.desc",
     category: "appetizer",
+    price: 180,
     image: "/items/classics/3.jpg",
   },
   {
@@ -61,6 +68,7 @@ const CLASSICS: MenuItem[] = [
     name: "menu.items.classics.c4.name",
     description: "menu.items.classics.c4.desc",
     category: "appetizer",
+    price: 180,
     image: "/items/classics/4.jpg",
   },
   {
@@ -68,6 +76,7 @@ const CLASSICS: MenuItem[] = [
     name: "menu.items.classics.c5.name",
     description: "menu.items.classics.c5.desc",
     category: "appetizer",
+    price: 180,
     image: "/items/classics/5.jpg",
   },
   {
@@ -75,6 +84,7 @@ const CLASSICS: MenuItem[] = [
     name: "menu.items.classics.c6.name",
     description: "menu.items.classics.c6.desc",
     category: "appetizer",
+    price: 180,
     image: "/items/classics/6.jpg",
   },
 ];
@@ -85,6 +95,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m1.name",
     description: "menu.items.signatures.m1.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/1.jpg",
   },
   {
@@ -92,6 +103,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m2.name",
     description: "menu.items.signatures.m2.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/2.jpg",
   },
   {
@@ -99,6 +111,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m3.name",
     description: "menu.items.signatures.m3.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/3.jpg",
   },
   {
@@ -107,12 +120,14 @@ const SIGNATURES: MenuItem[] = [
     description: "menu.items.signatures.m4.desc",
     category: "main",
     image: "/items/signature/5.jpg",
+    price: 220,
   },
   {
     id: "m5",
     name: "menu.items.signatures.m5.name",
     description: "menu.items.signatures.m5.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/4.jpg",
   },
   {
@@ -120,12 +135,14 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m6.name",
     description: "menu.items.signatures.m6.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/6.jpg",
   },
   {
     id: "m7",
     name: "menu.items.signatures.m7.name",
     description: "menu.items.signatures.m7.desc",
+    price: 220,
     category: "main",
     image: "/items/signature/7.jpg",
   },
@@ -134,6 +151,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m8.name",
     description: "menu.items.signatures.m8.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/8.jpg",
   },
   {
@@ -141,6 +159,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m9.name",
     description: "menu.items.signatures.m9.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/9.png",
   },
   {
@@ -148,6 +167,7 @@ const SIGNATURES: MenuItem[] = [
     name: "menu.items.signatures.m10.name",
     description: "menu.items.signatures.m10.desc",
     category: "main",
+    price: 220,
     image: "/items/signature/10.png",
   },
 ];
@@ -157,34 +177,40 @@ const ADDONS: MenuItem[] = [
     id: "a1",
     name: "menu.items.addons.a1",
     category: "addon",
+    price: 50,
   },
   {
     id: "a2",
     name: "menu.items.addons.a2",
     category: "addon",
+    price: 50,
   },
   {
     id: "a3",
     name: "menu.items.addons.a3",
     category: "addon",
+    price: 50,
   },
   {
     id: "a4",
     name: "menu.items.addons.a4",
     category: "addon",
     relatedItems: SALADS,
+    price: 150,
   },
   {
     id: "a5",
     name: "menu.items.addons.a5",
     category: "addon",
     relatedItems: CLASSICS,
+    price: 180,
   },
   {
     id: "a6",
     name: "menu.items.addons.a6",
     category: "addon",
     relatedItems: SIGNATURES,
+    price: 220,
   },
 ];
 
