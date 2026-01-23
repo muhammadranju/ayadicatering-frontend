@@ -1,128 +1,128 @@
-# Redux Project Setup
+# 🍽️ Ayadi Catering — Frontend
 
-A **React + Redux** starter template written in **TypeScript** — designed as a clean foundation for building scalable Redux-powered React applications.
-
-This repo includes common project structure, state management utilities, typed hooks, and best-practice conventions so you can start your Redux app quickly without repetitive boilerplate.
+This repository contains the **frontend application** for the **Ayadi Catering** platform — a responsive and user-friendly web app built with **Next.js**, **TypeScript**, and modern React best practices. This frontend is designed to work with the corresponding backend API to deliver a seamless catering experience.
 
 ---
 
-## 📦 Features
+## 🚀 Live Demo
 
-✔ Organized folder structure for components, state logic, hooks, types, and utilities
-✔ Fully typed (TypeScript) Redux setup
-✔ Base files for scalable state management
-✔ Reusable React hooks
-✔ Clean separation of domains and logic
+You can view the hosted frontend application:  
+👉 https://ayadicatering.com
 
 ---
 
-## 🚀 Project Structure
+## 🛠️ Features
 
-```
-├── app/             # App configuration, store setup, providers
-├── components/      # UI components
-├── data/            # Static data, mock data files
-├── hooks/           # Custom React hooks
-├── interface/       # TS interfaces used across the app
-├── lib/             # Shared utilities and helpers
-├── types/           # Type definitions
-├── public/          # Static public assets
-├── package.json     # Project dependencies & scripts
-├── tsconfig.json    # TypeScript configuration
-└── eslint.config.mjs# Linting configuration
-```
+- 🖥️ **Modern Frontend Framework**: Built using Next.js (React) for server-side rendering and static site generation.
+- 🧠 **TypeScript Support**: Fully typed codebase for enhanced developer experience and fewer runtime errors.
+- 🎨 **Responsive UI**: Designed to work smoothly on mobile and desktop screens.
+- 🔁 **API Integration Ready**: Connects to a backend catering API to fetch and submit data.
+- 📦 **Custom Hooks & Utilities**: Includes reusable hooks and utility functions for clean code organization.
+- 🌍 **Internationalization (i18n)** (if supported): Ready for localization and multi-language support.
 
 ---
 
-## 📌 Prerequisites
+## 🧩 Tech Stack
 
-Make sure you have **Node.js** and **npm** or **bun** installed.
-
-To develop and run this project locally:
+| Category         | Technology              |
+| ---------------- | ----------------------- |
+| Framework        | Next.js (React)         |
+| Language         | TypeScript              |
+| Styling          | CSS / Tailwind or other |
+| State Management | React Hooks / Redux?    |
+| Environment      | Vercel deployment       |
 
 ---
 
-## 🛠️ Installation
+## 📦 Getting Started
 
-1. **Clone the repository**
+Follow these steps to set up the project locally:
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/muhammadranju/redux-project-setup.git
-cd redux-project-setup
+git clone https://github.com/muhammadranju/ayadicatering-frontend.git
+cd ayadicatering-frontend
 ```
 
-2. **Install dependencies**
+### 2. Install dependencies
+
+Using bun:
 
 ```bash
-npm install
-# or
 bun install
 ```
 
-3. **Start the development server**
+Or using bun:
 
 ```bash
-npm start
-# or
-bun run start
+bun
 ```
 
-Visit `http://localhost:3000` in your browser to view the application.
+### 3. Create your environment variables
 
----
+Create a `.env.local` file in the root and add environment variables required by your app. A typical example might be:
 
-## 🧠 Redux Setup Overview
-
-This project uses a modern Redux architecture that aligns with common patterns such as:
-
-- Centralized Redux store configuration (likely in `app/`)
-- Typed Redux hooks (`useAppDispatch`, `useAppSelector`)
-- Feature-based organizational slices/modules
-- Separation of concerns between components and state logic
-
-💡 Redux Toolkit is recommended for maintaining Redux logic simply and clearly, and many current projects follow this pattern.([Redux][1])
-
----
-
-## 🧩 Usage
-
-### Adding a New Slice / Feature
-
-1. Create a new folder under `features/` or similar
-2. Define state and reducers using Redux Toolkit or standard Redux setup
-3. Export selectors and actions
-4. Connect components using typed hooks
-
-Example usage pattern:
-
-```tsx
-import { useAppSelector, useAppDispatch } from "../hooks";
-import { exampleAction } from "../features/exampleSlice";
-
-const Component = () => {
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.example.value);
-
-  return (
-    <button onClick={() => dispatch(exampleAction())}>Dispatch Action</button>
-  );
-};
+```
+NEXT_PUBLIC_API_URL=<your_backend_api_url>
 ```
 
+### 4. Run the development server
+
+```bash
+bun run dev
+```
+
+or
+
+```bash
+bun dev
+```
+
+Your app will start at `http://localhost:3000`.
+
 ---
 
-## 📦 Available Scripts
+## 📁 Project Structure
 
-Use the commands in `package.json` to:
-
-| Command         | Description                     |
-| --------------- | ------------------------------- |
-| `npm start`     | Run the app in development mode |
-| `npm run build` | Builds the app for production   |
-| `npm test`      | Launches the test runner        |
+````plaintext
+├── app/                # Next.js pages and layouts
+├── components/         # Reusable UI components
+├── hooks/              # Custom React hooks
+├── i18n/               # Localization files
+├── interface/          # TypeScript interfaces
+├── lib/                # Utilities and helper functions
+├── locales/            # Language translations
+├── public/             # Static assets (images, icons)
+├── types/              # TypeScript type definitions
+├── next.config.ts      # Next.js configuration
+├── package.json        # Project metadata & scripts
+└── tsconfig.json       # TypeScript configuration
+``` :contentReference[oaicite:9]{index=9}
 
 ---
 
-## 📖 Contributing
+## 📱 Usage
 
-Contributions are welcome! Please open issues and submit pull requests to improve features, add documentation, or fix bugs.
+After starting the development server, you can:
+
+- Browse the UI in your browser
+- Test API flows with your backend (e.g., login, menus, orders)
+- Modify UI components and styles
+- Build for production:
+
+```bash
+bun run build
+````
+
+---
+
+## 🧪 Testing
+
+Add unit or integration tests using tools such as **Jest** and **React Testing Library**. Testing ensures UI stays reliable as you enhance the application.
+
+---
+
+## 💬 Contact
+
+If you have questions or need help, open an issue or connect via GitHub.
