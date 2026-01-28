@@ -1,18 +1,14 @@
 "use client";
-import {
-  ADDONS,
-  CLASSICS,
-  SALADS,
-  SIGNATURES,
-  STEPS,
-} from "@/components/pages/home/buildYourMenu/data";
+import { STEPS } from "@/components/pages/home/buildYourMenu/data";
+import { MenuItem } from "@/components/pages/home/buildYourMenu/types";
+import { useGetBuildPackageListQuery } from "@/lib/redux/features/api/buildPackage/buildPackageApiSlice";
 import Stepper from "@/components/pages/home/buildYourMenu/Stepper";
 import StepDateTime from "@/components/pages/home/buildYourMenu/steps/StepDateTime";
 import StepDelivery from "@/components/pages/home/buildYourMenu/steps/StepDelivery";
 import StepMenuSelection from "@/components/pages/home/buildYourMenu/steps/StepMenuSelection";
 import StepPayment from "@/components/pages/home/buildYourMenu/steps/StepPayment";
 import StepSuccess from "@/components/pages/home/buildYourMenu/steps/StepSuccess";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface BuildYourMenuProps {
@@ -58,6 +54,129 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   // --- STEP 3: Payment ---
   const [paymentMethod, setPaymentMethod] = useState("credit");
 
+  // --- Data Fetching & Transformation ---
+  const { data: buildPackagesData } = useGetBuildPackageListQuery({
+    limit: 1000,
+  });
+
+  const { salads, classics, signatures, customAddons, allItemsForCalculation } =
+    useMemo(() => {
+      const items: any[] = buildPackagesData?.data?.data || [];
+
+      const transformedItems: MenuItem[] = items.map((item) => {
+        let category: MenuItem["category"] = "main"; // Default
+        const catName = (item.categoryId?.name || "").toLowerCase().trim();
+
+        if (catName === "salad" || catName === "salads") category = "salad";
+        else if (catName === "classic" || catName === "classics")
+          category = "appetizer";
+        else if (
+          catName === "signature item" ||
+          catName === "signature items" ||
+          catName === "signatures" ||
+          catName === "main course"
+        )
+          category = "main";
+        else if (catName === "add-on" || catName === "add-ons")
+          category = "addon";
+
+        return {
+          id: item._id,
+          name: item.platterName,
+          nameArabic: item.platterNameArabic,
+          description: item.description,
+          descriptionArabic: item.descriptionArabic,
+          price: item.price,
+          image: item.image,
+          category,
+          platterNameArabic: item.platterNameArabic,
+          isAvailable: item.isAvailable,
+          relatedItems: [],
+        };
+      });
+
+      const _salads = transformedItems.filter((i) => i.category === "salad");
+      const _classics = transformedItems.filter(
+        (i) => i.category === "appetizer",
+      );
+      const _signatures = transformedItems.filter((i) => i.category === "main");
+
+      // Custom Add-ons Construction
+      const _customAddons: MenuItem[] = [
+        {
+          id: "white-rice",
+          name: "White Rice",
+          platterNameArabic: "أرز أبيض",
+          description: "",
+          descriptionArabic: "",
+          price: 60,
+          category: "addon",
+        },
+        {
+          id: "grilled-vegetables",
+          name: "Grilled Vegetables",
+          platterNameArabic: "خضار مشوية",
+          description: "",
+          descriptionArabic: "",
+          price: 120,
+          category: "addon",
+        },
+        {
+          id: "sauces",
+          name: "Sauces",
+          platterNameArabic: "صلصات",
+          description: "",
+          descriptionArabic: "",
+          price: 10,
+          category: "addon",
+        },
+        {
+          id: "addon-salad-dropdown",
+          name: "Salad",
+          platterNameArabic: "سلطة",
+          category: "addon",
+          price: 295,
+          // Map salads to related items with overridden price
+          relatedItems: _salads.map((s) => ({ ...s, price: 295 })),
+        },
+        {
+          id: "addon-classic-dropdown",
+          name: "Classic",
+          platterNameArabic: "كلاسيك",
+          category: "addon",
+          price: 365,
+          // Map classics to related items with overridden price
+          relatedItems: _classics.map((c) => ({ ...c, price: 365 })),
+        },
+        {
+          id: "addon-main-dropdown",
+          name: "Main Dish",
+          platterNameArabic: "طبق رئيسي",
+          category: "addon",
+          price: 395,
+          // Map signatures to related items with overridden price
+          relatedItems: _signatures.map((s) => ({ ...s, price: 395 })),
+        },
+      ];
+
+      const flatAddonItems: MenuItem[] = [];
+      _customAddons.forEach((addon) => {
+        if (addon.relatedItems) {
+          flatAddonItems.push(...addon.relatedItems);
+        } else {
+          flatAddonItems.push(addon);
+        }
+      });
+
+      return {
+        salads: _salads,
+        classics: _classics,
+        signatures: _signatures,
+        customAddons: _customAddons,
+        allItemsForCalculation: flatAddonItems,
+      };
+    }, [buildPackagesData]);
+
   // Selection Logic for Step 0
   const handleSaladSelect = (id: string) =>
     setSelectedSalad(id === selectedSalad ? null : id);
@@ -87,10 +206,12 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   };
 
   // Calculations
-  const allItems = [...ADDONS, ...SALADS, ...CLASSICS, ...SIGNATURES];
-  const selectedAddonObjects = allItems.filter((addon) =>
-    selectedAddons.includes(addon.id),
-  );
+  const selectedAddonObjects = useMemo(() => {
+    return selectedAddons
+      .map((id) => allItemsForCalculation.find((item) => item.id === id))
+      .filter((item): item is MenuItem => !!item);
+  }, [selectedAddons, allItemsForCalculation]);
+
   const subtotal = selectedAddonObjects.reduce(
     (acc, curr) => acc + (curr.price || 0),
     0,
@@ -124,6 +245,9 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     if (step > (isPackageMode ? 1 : 0)) setStep(step - 1);
   };
 
+  const { i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
   return (
     <div className="w-full max-w-7xl pb-40 mx-auto">
       {/* Header */}
@@ -155,6 +279,10 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
             handleMainSelect={handleMainSelect}
             selectedAddons={selectedAddons}
             handleAddonSelect={handleAddonSelect}
+            salads={salads}
+            classics={classics}
+            signatures={signatures}
+            addons={customAddons}
           />
         )}
         {step === 1 && (
@@ -188,8 +316,8 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
 
       {/* Navigation Footer (Static) */}
       {step < 3 && (
-        <div className="w-full bg-white rounded-md shadow-lg mx-auto">
-          <div className="px-6  py-8">
+        <div className=" bg-white rounded-md shadow-lg mx-auto  px-10">
+          <div className=" py-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
               {/* Selected Summary (Only Step 0) */}
               {step === 0 ? (
@@ -204,33 +332,41 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
                         {t("menu.noAddons")}
                       </p>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-4">
                         {selectedAddonObjects.map((addon) => (
                           <div
                             key={addon.id}
-                            className="flex justify-between text-sm text-gray-600"
+                            className="flex justify-between text-base text-gray-600"
                           >
-                            <span>{t(addon.name)}</span>
-                            {/* <span>{addon.price} SAR</span> */}
+                            <span>
+                              {isArabic
+                                ? addon.platterNameArabic || addon.name
+                                : addon.name}
+                            </span>
+                            <span className="font-medium">
+                              {addon.price} {t("menu.SARprice")}
+                            </span>
                           </div>
                         ))}
-                        <div className="flex justify-between text-sm text-gray-600 pt-2 border-t border-gray-200 sr-only">
+                        <div className="flex justify-between text-sm text-gray-600 pt-4 border-t border-gray-200">
                           <span>Vat (15%)</span>
-                          {/* <span>{(subtotal * 0.15).toFixed(2)} SAR</span> */}
+                          <span>
+                            {(subtotal * 0.15).toFixed(2)} {t("menu.SARprice")}
+                          </span>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center pt-4 border-t border-gray-100 sr-only">
-                    <span className="font-bold text-green-500 text-lg">
+                  <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <span className="font-bold text-gray-800 text-lg">
                       {t("menu.totalAddons")}:
                     </span>
-                    <span className="font-bold text-green-500 text-lg">
+                    <span className="font-bold text-gray-800 text-lg">
                       {(total * 1.15).toLocaleString(undefined, {
                         maximumFractionDigits: 0,
                       })}{" "}
-                      SAR
+                      {t("menu.SARprice")}
                     </span>
                   </div>
                 </div>
