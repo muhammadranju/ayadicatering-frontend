@@ -6,10 +6,16 @@ export const metadata = {
   description: "Order - AYADI",
 };
 
-function page() {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+async function page(props: PageProps) {
+  const params = await props.params;
+
   return (
     <>
-      <SingleOrderPage />
+      <SingleOrderPage orderId={params.id} />
     </>
   );
 }

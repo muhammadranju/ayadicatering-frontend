@@ -1,10 +1,16 @@
+"use client";
+
 import React from "react";
 import { OrderDetails } from "./OrderDetails";
 
-function SingleOrderPage() {
+interface SingleOrderPageProps {
+  orderId: string;
+}
+
+function SingleOrderPage({ orderId }: SingleOrderPageProps) {
   return (
     <>
-      <OrderDetails />
+      <OrderDetails orderId={orderId} />
     </>
   );
 }
