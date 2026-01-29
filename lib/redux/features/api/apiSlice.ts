@@ -24,8 +24,11 @@ export const apiSlice = createApi({
     "Category",
     "Item",
     "Order",
+    "Orders",
     "BuildPackage",
     "Terms-conditions",
+    "DeliverySlot",
+    "faq",
   ],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   endpoints: (builder) => ({}),
