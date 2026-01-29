@@ -1,15 +1,32 @@
 "use client";
 import CTA_SECTION from "@/components/pages/faq/CTA_SECTION";
+import { useGetFaqListQuery } from "@/lib/redux/features/api/faq/faqApiSlice";
 import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // FAQ Data Structure
 const FAQ_IDS = ["01", "02", "03", "04", "05", "06", "07"];
 
+interface IFaq {
+  question: string;
+  questionArabic: string;
+  answer: string;
+  answerArabic: string;
+}
 const FaqPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
   const [openFaq, setOpenFaq] = useState<string>("0");
+  const [faqs, setFaqs] = useState<IFaq[]>([]);
+
+  const { data: faqList } = useGetFaqListQuery(null);
+
+  useEffect(() => {
+    if (faqList) {
+      setFaqs(faqList?.data?.data);
+    }
+  }, [faqList]);
 
   const toggleFaq = (id: string) => {
     setOpenFaq(openFaq === id ? "" : id);
@@ -54,22 +71,22 @@ const FaqPage: React.FC = () => {
           {/* Right Column: Accordion */}
           <div className="lg:w-2/3 w-full">
             <div className="divide-y divide-gray-200">
-              {FAQ_IDS.map((id) => (
-                <div key={id} className="py-6 md:py-8 group  ">
+              {faqs.map((faq: any) => (
+                <div key={faq.id} className="py-6 md:py-8 group  ">
                   <button
-                    onClick={() => toggleFaq(id)}
+                    onClick={() => toggleFaq(faq._id)}
                     className="w-full flex items-start justify-between text-left focus:outline-none cursor-pointer"
                   >
                     <div className="flex items-start gap-6 md:gap-8">
                       <span className="font-tinos text-xl md:text-2xl italic font-bold mt-1 ">
-                        {id}
+                        {isArabic ? faq.id : faq.id}
                       </span>
                       <span className="font-tinos text-xl md:text-2xl text-charcoal font-bold mt-1 group-hover:text-terracotta transition-colors">
-                        {t(`faq.questions.${id}.q`)}
+                        {isArabic ? faq.questionArabic : faq.question}
                       </span>
                     </div>
                     <div className="ml-4 mt-1">
-                      {openFaq === id ? (
+                      {openFaq === faq._id ? (
                         <div className="rounded-full border border-charcoal p-1">
                           <Minus className="w-6 h-6 text-gray-600" />
                         </div>
@@ -84,14 +101,14 @@ const FaqPage: React.FC = () => {
                   {/* Accordion Content */}
                   <div
                     className={`grid transition-all duration-300 ease-in-out ${
-                      openFaq === id
+                      openFaq === faq._id
                         ? "grid-rows-[1fr] opacity-100 mt-4"
                         : "grid-rows-[0fr] opacity-0"
                     }`}
                   >
                     <div className="overflow-hidden">
                       <p className="pl-[3.5rem] md:pl-[5rem] text-gray-600 leading-relaxed text-lg max-w-2xl">
-                        {t(`faq.questions.${id}.a`)}
+                        {isArabic ? faq.answerArabic : faq.answer}
                       </p>
                     </div>
                   </div>
