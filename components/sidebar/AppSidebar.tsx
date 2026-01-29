@@ -22,6 +22,7 @@ import {
   Settings,
   ShoppingBag,
   Utensils,
+  Clock,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,6 +54,12 @@ const NAV_MAIN: NavItem[] = [
     url: "/dashboard/calendar-view",
     icon: <Calendar />,
   },
+
+  // {
+  //   title: "Delivery Slots",
+  //   url: "/dashboard/delivery-slots",
+  //   icon: <Clock />,
+  // },
 
   {
     title: "FAQ",
