@@ -43,20 +43,6 @@ export const StatCard: React.FC<StatCardProps> = ({
             />
           )}
         </div>
-
-        {trend && (
-          <span
-            className={`text-sm font-medium ${isDark ? "text-[#D48D73]" : "text-green-500"}`}
-          >
-            {trend}
-          </span>
-        )}
-
-        {actionNeeded && (
-          <span className="text-xs font-semibold text-primary">
-            Action Needed
-          </span>
-        )}
       </div>
 
       <div>
