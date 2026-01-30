@@ -4,6 +4,9 @@ import {
   useUpdateFaqMutation,
 } from "@/lib/redux/features/api/faq/faqApiSlice";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface FAQModalProps {
   isOpen: boolean;
@@ -89,87 +92,109 @@ export const FAQModal: React.FC<FAQModalProps> = ({
         <form className="space-y-6" onSubmit={handleSubmit}>
           {/* English Fields */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-900">
-              Question (English)
-            </label>
-            <input
+            <CustomInput
               type="text"
-              name="question"
+              id="question"
+              label="Question (English)"
               value={formData.question}
               onChange={handleChange}
               placeholder="Enter question in English"
-              required
-              className="w-full rounded-md border border-gray-200 px-4 py-3.5 text-sm text-gray-700 placeholder-gray-400 focus:border-sidebar focus:outline-none focus:ring-1 focus:ring-sidebar transition-shadow"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-900">
-              Answer (English)
-            </label>
-            <input
+            <CustomInput
+              label="Answer (English)"
               type="text"
-              name="answer"
+              id="answer"
               value={formData.answer}
               onChange={handleChange}
               placeholder="Enter answer in English"
-              required
-              className="w-full rounded-md border border-gray-200 px-4 py-3.5 text-sm text-gray-700 placeholder-gray-400 focus:border-sidebar focus:outline-none focus:ring-1 focus:ring-sidebar transition-shadow"
             />
           </div>
 
           {/* Arabic Fields */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-900">
-              Question (Arabic)
-            </label>
-            <input
-              type="text"
-              name="questionArabic"
+            {/* Question (Arabic) */}
+            <CustomInput
+              id="questionArabic"
+              label="Question (Arabic)"
               value={formData.questionArabic}
               onChange={handleChange}
-              placeholder="Enter question in Arabic"
-              required
-              className="w-full rounded-md border border-gray-200 px-4 py-3.5 text-sm text-gray-700 placeholder-gray-400 focus:border-sidebar focus:outline-none focus:ring-1 focus:ring-sidebar transition-shadow"
+              placeholder="أدخل السؤال باللغة العربية"
+              type="text"
               dir="rtl"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-900">
-              Answer (Arabic)
-            </label>
-            <input
-              type="text"
-              name="answerArabic"
+            <CustomInput
+              id="answerArabic"
+              label="Answer (Arabic)"
               value={formData.answerArabic}
               onChange={handleChange}
-              placeholder="Enter answer in Arabic"
-              required
-              className="w-full rounded-md border border-gray-200 px-4 py-3.5 text-sm text-gray-700 placeholder-gray-400 focus:border-sidebar focus:outline-none focus:ring-1 focus:ring-sidebar transition-shadow"
+              placeholder="أدخل الإجابة باللغة العربية"
+              type="text"
               dir="rtl"
             />
           </div>
 
           <div className="pt-6 flex justify-center gap-4">
-            <button
+            <Button
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="w-48 rounded-md border border-gray-300 bg-white py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+              className="w-48 rounded-md border border-gray-300 bg-white py-6 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={isLoading}
-              className="w-48 rounded-md bg-sidebar py-3 text-base font-medium text-white shadow-sm hover:bg-sidebarHover transition-colors disabled:opacity-50"
+              className="w-48 rounded-md bg-emerald-800 py-6 text-base font-medium text-white shadow-sm hover:bg-emerald-700 transition-colors disabled:opacity-50"
             >
               {isLoading ? "Saving..." : type === "ADD" ? "Add" : "Save"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
     </div>
   );
 };
+
+function CustomInput({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  type,
+  dir,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+  type: string;
+  dir?: string;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={id} className="block text-sm font-medium text-gray-900">
+        {label}
+      </Label>
+      <Input
+        type={type}
+        id={id}
+        name={id}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        required={true}
+        dir={dir}
+        className="w-full rounded-md border border-gray-200 px-4 text-sm text-gray-700 placeholder-gray-400 focus:border-sidebar focus:outline-none focus:ring-1 focus:ring-sidebar transition-shadow"
+      />
+    </div>
+  );
+}

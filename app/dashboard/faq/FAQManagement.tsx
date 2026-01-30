@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { TableRowSkeleton } from "@/components/skeletons/TableRowSkeleton";
+import { Button } from "@/components/ui/button";
 
 export const FAQManagement: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -194,12 +195,12 @@ export const FAQManagement: React.FC = () => {
 
       {/* Floating Add Button */}
       <div className="fixed bottom-8 right-8 z-10">
-        <button
+        <Button
           onClick={handleOpenAdd}
-          className="flex items-center gap-2 rounded-lg bg-sidebar px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-sidebarHover transition-all"
+          className="flex items-center gap-2 rounded-lg bg-emerald-800 px-6 py-6 text-sm font-bold text-white shadow-lg hover:bg-emerald-700 transition-all"
         >
           <Plus size={18} /> Add New FAQ
-        </button>
+        </Button>
       </div>
 
       <FAQModal
@@ -222,13 +223,16 @@ export const FAQManagement: React.FC = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setFaqToDelete(null)}>
+            <AlertDialogCancel
+              onClick={() => setFaqToDelete(null)}
+              className="rounded-lg"
+            >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isDeleting}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-white rounded-lg"
             >
               {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
