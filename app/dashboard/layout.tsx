@@ -1,45 +1,35 @@
 import { Header } from "@/components/dashboard/Header";
 import { AppSidebar } from "@/components/sidebar/AppSidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import StoreProvider from "@/lib/redux/provider";
-import { Toaster } from "@/components/ui/sonner";
+import LtrEnforcer from "@/components/providers/LtrEnforcer";
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "../globals.css";
-
-const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Dashboard Overview - AYADI",
   description: "Dashboard Overview - AYADI",
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.className}`} dir="ltr">
-        <StoreProvider>
-          <SidebarProvider className="bg-neutral-50">
-            <AppSidebar />
-            <SidebarInset>
-              <div className="flex-1 flex flex-col overflow-hidden bg-neutral-50">
-                <Header />
+    <LtrEnforcer>
+      <SidebarProvider className="bg-neutral-50">
+        <AppSidebar />
+        <SidebarInset>
+          <div className="flex-1 flex flex-col overflow-hidden bg-neutral-50">
+            <Header />
 
-                <main className="flex-1 overflow-y-auto p-6 ">
-                  <div className=" mx-auto space-y-6   mt-6 rounded-xl">
-                    {children}
-                    <Toaster />
-                  </div>
-                </main>
+            <main className="flex-1 overflow-y-auto p-6 ">
+              <div className=" mx-auto space-y-6   mt-6 rounded-xl">
+                {children}
               </div>
-            </SidebarInset>
-          </SidebarProvider>
-        </StoreProvider>
-      </body>
-    </html>
+            </main>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </LtrEnforcer>
   );
 }

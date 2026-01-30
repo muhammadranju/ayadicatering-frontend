@@ -63,7 +63,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
               <span className="text-lg font-medium text-[#D48D73]">
                 {pkg.price}{" "}
                 <span className="text-sm font-normal text-gray-500">
-                  SAR per person <span className="font-bold">{pkg.person}</span>
+                  SAR per person
                 </span>
               </span>
             </div>

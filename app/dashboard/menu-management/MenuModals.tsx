@@ -419,7 +419,8 @@ export const MenuModal: React.FC<MenuModalProps> = ({
                 <div className="flex gap-x-4 justify-between">
                   <div className="w-full">
                     <label className="mb-2 block text-sm font-medium text-gray-700">
-                      Price <span className="text-red-400">*</span>
+                      Price (Per Person)
+                      <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="number"
@@ -431,7 +432,7 @@ export const MenuModal: React.FC<MenuModalProps> = ({
                       className="w-full rounded-md border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 focus:border-emerald-900 focus:outline-none focus:ring-1 focus:ring-emerald-900"
                     />
                   </div>
-                  <div className="w-full">
+                  {/* <div className="w-full">
                     <label className="mb-2 block text-sm font-medium text-gray-700">
                       Per Person <span className="text-red-400">*</span>
                     </label>
@@ -444,7 +445,7 @@ export const MenuModal: React.FC<MenuModalProps> = ({
                       required
                       className="w-full rounded-md border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 focus:border-emerald-900 focus:outline-none focus:ring-1 focus:ring-emerald-900"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </>
             )}
