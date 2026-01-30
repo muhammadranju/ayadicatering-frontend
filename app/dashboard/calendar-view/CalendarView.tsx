@@ -2,7 +2,16 @@
 
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { format, addDays, startOfMonth, endOfMonth } from "date-fns";
+import {
+  format,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  getDay,
+  isSameMonth,
+  isToday,
+} from "date-fns";
 import { useGetAllDeliverySlotsQuery } from "@/lib/redux/features/api/deliverySlots/deliverySlotsApiSlice";
 
 interface CalendarViewProps {
@@ -14,9 +23,13 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
-  // Calculate date range for fetching data (current month + next month)
-  const startDate = format(startOfMonth(new Date()), "yyyy-MM-dd");
-  const endDate = format(endOfMonth(addDays(new Date(), 60)), "yyyy-MM-dd");
+  // Calculate date range for fetching data (current month)
+  const currentDate = new Date();
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
+
+  const startDate = format(monthStart, "yyyy-MM-dd");
+  const endDate = format(monthEnd, "yyyy-MM-dd");
 
   // Fetch delivery slots
   const { data: deliverySlots, isLoading } = useGetAllDeliverySlotsQuery({
@@ -36,18 +49,26 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
     return "available";
   };
 
-  // Generate calendar dates (next 60 days)
-  const calendarDates = Array.from({ length: 60 }, (_, i) =>
-    addDays(new Date(), i),
-  );
+  // Generate calendar grid for the current month
+  const daysInMonth = eachDayOfInterval({
+    start: monthStart,
+    end: monthEnd,
+  });
+
+  // Calculate empty slots at the start of the month to align with day of week
+  const startDayIndex = getDay(monthStart);
+  const emptySlots = Array.from({ length: startDayIndex });
+
+  // Combine empty slots and actual days
+  const calendarGrid = [...emptySlots, ...daysInMonth];
 
   const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-full">
+    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 h-full">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-xl  text-gray-900">
-          {format(new Date(), "MMMM yyyy")}
+        <h2 className="text-2xl font-semibold text-gray-800">
+          {format(currentDate, "MMMM yyyy")}
         </h2>
         <div className="flex gap-2">
           <span className="text-sm text-gray-500">
@@ -56,85 +77,92 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-y-6 text-center">
+      <div className="grid grid-cols-7 gap-4">
         {weekDays.map((day) => (
           <div
             key={day}
-            className="text-xs font-bold text-gray-400 tracking-wider mb-2"
+            className="text-center text-xs font-bold text-gray-400 tracking-widest uppercase py-2"
           >
             {day}
           </div>
         ))}
 
-        {calendarDates.slice(0, 35).map((date, idx) => {
-          const status = getDateBlockStatus(date);
-          const isSelected =
-            selectedDate &&
-            format(date, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
-
-          let bgColor = "bg-white";
-          let textColor = "text-gray-700";
-          let borderColor = "border-transparent";
-
-          if (status === "blocked") {
-            bgColor = "bg-red-100";
-            textColor = "text-red-700";
-            borderColor = "border-red-300";
-          } else if (status === "partial") {
-            bgColor = "bg-orange-100";
-            textColor = "text-orange-700";
-            borderColor = "border-orange-300";
+        {calendarGrid.map((date, idx) => {
+          // Render empty slot if date is undefined (from emptySlots)
+          if (!date) {
+            return <div key={`empty-${idx}`} className="aspect-square" />;
           }
 
+          const status = getDateBlockStatus(date as Date);
+          const isSelected =
+            selectedDate &&
+            format(date as Date, "yyyy-MM-dd") ===
+              format(selectedDate, "yyyy-MM-dd");
+          const isCurrentDay = isToday(date as Date);
+
+          // Base styles for the card
+          let containerClasses = "bg-[#F8F9FB] text-gray-700 hover:bg-gray-100";
+          let dotColor = null;
+
+          // Status-based styles
+          if (status === "blocked") {
+            // containerClasses = "bg-red-50 text-red-700"; // Optional: tint blocked days
+            dotColor = "bg-red-500";
+          } else if (status === "partial") {
+            // containerClasses = "bg-orange-50 text-orange-700"; // Optional: tint partial days
+            dotColor = "bg-orange-500";
+          } else if (isCurrentDay && !isSelected) {
+            // Indicate today with a green dot if available and not selected
+            dotColor = "bg-green-500";
+          }
+
+          // Selection styles (override everything)
           if (isSelected) {
-            bgColor = "bg-brand-orange";
-            textColor = "text-white";
-            borderColor = "border-orange-600";
+            containerClasses =
+              "bg-[#E07A5F] text-white shadow-md transform scale-105";
+            dotColor = "bg-white"; // Dot becomes white on selected background
           }
 
           return (
             <div
               key={idx}
-              onClick={() => setSelectedDate(date)}
-              className="flex flex-col items-center justify-start h-12 relative group cursor-pointer"
+              onClick={() => setSelectedDate(date as Date)}
+              className={`
+                aspect-square rounded-2xl flex flex-col items-center justify-center relative cursor-pointer transition-all duration-200
+                ${containerClasses}
+              `}
             >
-              <div
-                className={`
-                  w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 border ${bgColor} ${textColor} ${borderColor}
-                  ${!isSelected ? "hover:bg-gray-50" : "shadow-md"}
-                `}
+              <span
+                className={`text-lg font-medium ${isSelected ? "text-white" : ""}`}
               >
-                {format(date, "d")}
-              </div>
+                {format(date as Date, "d")}
+              </span>
 
               {/* Status Indicator Dot */}
-              {!isSelected && status !== "available" && (
-                <div
-                  className={`
-                  w-1.5 h-1.5 rounded-full mt-1
-                  ${status === "blocked" ? "bg-red-500" : "bg-orange-500"}
-                `}
-                />
+              {dotColor && (
+                <div className={`w-1.5 h-1.5 rounded-full mt-2 ${dotColor}`} />
               )}
             </div>
           );
         })}
       </div>
 
-      <div className="flex gap-6 mt-8 pt-6 border-t border-gray-100">
+      <div className="flex gap-6 mt-10 pt-6 border-t border-gray-100 justify-end">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-          <span className="text-xs text-gray-500 font-medium">Available</span>
+          <div className="w-2 h-2 rounded-full bg-green-500"></div>
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+            Available
+          </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-orange-500"></div>
-          <span className="text-xs text-gray-500 font-medium">
+          <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
             Partially Blocked
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-          <span className="text-xs text-gray-500 font-medium">
+          <div className="w-2 h-2 rounded-full bg-red-500"></div>
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
             Fully Blocked
           </span>
         </div>
