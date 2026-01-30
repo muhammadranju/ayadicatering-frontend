@@ -31,13 +31,12 @@ const PackagesPage: React.FC = () => {
     }
   }, [data]);
 
-  console.log(packages);
   return (
     <section className="py-20 ">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-7xl text-black">
+          <h2 className="text-4xl font-semibold md:text-7xl text-black">
             {t("packages.title")}
           </h2>
           <p className="text-gray-500 text-lg md:text-xl font-light max-w-7xl mx-auto">
@@ -99,9 +98,7 @@ const PackagesPage: React.FC = () => {
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-4xl  text-amber-700 font-normal">
                     {packageItem.price}
-                  </span>
-                  <span className="text-gray-500 text-sm font-medium uppercase tracking-wide">
-                    {t("menu.SARprice")}
+                    <span className="text-3xl">⃁</span>
                   </span>
                 </div>
 
