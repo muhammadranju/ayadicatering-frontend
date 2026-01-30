@@ -4,21 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "404 - TechAdvantage",
+  title: "404 - Ayadi Catering",
   description: "404",
   openGraph: {
-    title: "404 - TechAdvantage",
+    title: "404 - Ayadi Catering",
     description: "404",
-    url: "https://www.techadvantage.com/404",
+    url: "https://www.ayadicatering.com/404",
     images: [
       {
-        url: "https://www.techadvantage.com/images/404.png",
+        url: "https://www.ayadicatering.com/images/404.png",
         width: 1200,
         height: 630,
         alt: "404",
       },
     ],
-    siteName: "TechAdvantage",
+    siteName: "Ayadi Catering",
   },
 };
 
@@ -29,8 +29,8 @@ const notFound = () => {
       <h1 className="uppercase text-4xl font-semibold tracking-[10px] text-center">
         Page Not Found
       </h1>
-      <Link href="/dashboard/overview" className="mt-14 w-full">
-        <Button className="w-full">Back to Home</Button>
+      <Link href="/" className="mt-14 w-full ">
+        <Button className="w-full py-6 rounded-xl">Back to Home</Button>
       </Link>
     </div>
   );
