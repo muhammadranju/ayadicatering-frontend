@@ -12,12 +12,18 @@ function HomePage() {
       <div className="">
         <section className="relative  lg:container md:max-w-7xl mx-auto flex items-center overflow-hidden py-5 lg:py-24 md:py-20 ">
           {/* Background Watermark Letter "A" - Stylized */}
-          <div className="absolute top-1/2 left-0 md:left-20 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none">
+          <div
+            className="absolute top-1/2 left-0 md:left-20 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none"
+            aria-hidden="true"
+          >
             <span className="text-[400px] md:text-[600px] text-primary font-medium leading-none">
               A
             </span>
           </div>
-          <div className="absolute top-1/2 left-40 md:left-110 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none">
+          <div
+            className="absolute top-1/2 left-40 md:left-110 transform -translate-y-1/2 opacity-[0.05] select-none pointer-events-none"
+            aria-hidden="true"
+          >
             <span className="text-[400px] md:text-[600px] text-primary font-medium leading-none">
               Y
             </span>
@@ -42,7 +48,10 @@ function HomePage() {
             {/* Right Image */}
             <div className="relative mt-8 md:mt-0">
               {/* Pinkish background shape behind image */}
-              <div className="absolute -top-0.5 -right-4 lg:w-[690px] lg:h-[595px] bg-[#E07A5F33] rounded-sm -z-10 rotate-1 "></div>
+              <div
+                className="absolute -top-0.5 -right-4 lg:w-[690px] lg:h-[595px] bg-[#E07A5F33] rounded-sm -z-10 rotate-1 "
+                aria-hidden="true"
+              ></div>
 
               <div className="relative rounded-lg overflow-hidden  -rotate-2">
                 <Image
