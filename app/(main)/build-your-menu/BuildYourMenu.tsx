@@ -11,9 +11,11 @@ import StepSuccess from "@/components/pages/home/buildYourMenu/steps/StepSuccess
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCreateOrderMutation } from "@/lib/redux/features/api/orders/ordersApiSlice";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import { useGetSetPackageListQuery } from "@/lib/redux/features/api/set-package/setPackageApiSlice";
+import { saveOrderTime } from "@/lib/utils/orderStorage";
+import { format } from "date-fns";
 
 interface BuildYourMenuProps {
   isPackageMode?: boolean;
@@ -343,6 +345,12 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
 
     try {
       await createOrder(bookingData).unwrap();
+
+      // Save order time to localStorage to prevent multiple orders for same date within 5 hours
+      if (selectedDate) {
+        saveOrderTime(format(selectedDate, "yyyy-MM-dd"));
+      }
+
       toast.success(t("Order placed successfully!"));
       // Proceed to Success Step
       handleNext();
@@ -359,19 +367,21 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     <div className="w-full max-w-7xl pb-40 mx-auto">
       {/* Header */}
       {step < 4 && (
-        <div>
-          <Stepper steps={STEPS} currentStep={step} />
-          {step === 4 && (
+        <>
+          <div className="sticky top-0   pt-2">
+            <Stepper steps={STEPS} currentStep={step} />
+          </div>
+          {step === 0 && (
             <div className="animate-in fade-in slide-in-from-top-4 duration-700">
-              <h1 className=" text-4xl md:text-6xl lg:mt-20 mb-4 text-charcoal">
+              <h1 className=" text-4xl md:text-6xl lg:mt-20 mb-4 text-charcoal  font-semibold text-center">
                 {t("menu.title")}
               </h1>
-              <p className="text-color font-light text-lg max-w-2xl mx-auto">
+              <p className="text-color font-normal text-lg max-w-3xl mx-auto text-center">
                 {t("menu.subtitle")}
               </p>
             </div>
           )}
-        </div>
+        </>
       )}
 
       {/* Main Content */}
@@ -429,89 +439,82 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
 
       {/* Navigation Footer (Static) */}
       {step < 3 && (
-        <div className=" bg-white rounded-md shadow-lg mx-auto  px-10">
-          <div className=" py-8">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-              {/* Selected Summary (Only Step 0) */}
-              {step === 0 ? (
-                <div className="flex-grow w-full">
-                  <h4 className=" text-lg mb-4 text-charcoal">
-                    {t("menu.selectedAddons")}
-                  </h4>
+        <div className="mx-auto m w-full max-w-7xl px-4 md:px-6 lg:px-8">
+          {/* Selected Summary (Only Step 0) */}
+          {step === 0 && (
+            <div className="bg-white rounded-xl shadow-sm p-8 mb-8 border border-gray-100">
+              <h4 className="text-xl font-medium mb-6 text-charcoal">
+                {t("menu.selectedAddons")}
+              </h4>
 
-                  <div className="mb-4">
-                    {selectedAddonObjects.length === 0 ? (
-                      <p className="text-gray-400 text-sm italic">
-                        {t("menu.noAddons")}
-                      </p>
-                    ) : (
-                      <div className="space-y-4">
-                        {selectedAddonObjects.map((addon) => (
-                          <div
-                            key={addon.id}
-                            className="flex justify-between text-base text-gray-600"
-                          >
-                            <span>
-                              {isArabic
-                                ? addon.platterNameArabic || addon.name
-                                : addon.name}
-                            </span>
-                            <span className="font-medium">
-                              {addon.price} {t("menu.SARprice")}
-                            </span>
-                          </div>
-                        ))}
-                        <div className="flex justify-between text-sm text-gray-600 pt-4 border-t border-gray-200">
-                          <span>Vat (15%)</span>
-                          <span>
-                            {(subtotal * 0.15).toFixed(2)} {t("menu.SARprice")}
-                          </span>
-                        </div>
+              <div className="mb-6">
+                {selectedAddonObjects.length === 0 ? (
+                  <p className="text-gray-400 text-sm italic">
+                    {t("menu.noAddons")}
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    {selectedAddonObjects.map((addon) => (
+                      <div
+                        key={addon.id}
+                        className="flex justify-between text-base text-gray-600"
+                      >
+                        <span>
+                          {isArabic
+                            ? addon.platterNameArabic || addon.name
+                            : addon.name}
+                        </span>
+                        <span className="font-medium">
+                          {addon.price} {t("menu.SARprice")}
+                        </span>
                       </div>
-                    )}
+                    ))}
+                    <div className="flex justify-between text-sm text-gray-600 pt-4 border-t border-gray-100 mt-4">
+                      <span>Vat</span>
+                      <span>15%</span>
+                    </div>
                   </div>
+                )}
+              </div>
 
-                  <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                    <span className="font-bold text-gray-800 text-lg">
-                      {t("menu.totalAddons")}:
-                    </span>
-                    <span className="font-bold text-gray-800 text-lg">
-                      {(total * 1.15).toLocaleString(undefined, {
-                        maximumFractionDigits: 0,
-                      })}{" "}
-                      {t("menu.SARprice")}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex-grow"></div>
-              )}
+              <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+                <span className="font-bold text-gray-800 text-lg">
+                  {t("menu.totalAddons")}:
+                </span>
+                <span className="font-bold text-gray-800 text-lg">
+                  {(total * 1.15).toLocaleString(undefined, {
+                    maximumFractionDigits: 0,
+                  })}{" "}
+                  {t("menu.SARprice")}
+                </span>
+              </div>
             </div>
-            {/* Actions */}
-            <div className="flex gap-4 w-full  pt-10  justify-between items-end h-full ">
-              <button
-                onClick={handleBack}
-                disabled={step === (isPackageMode ? 1 : 0)}
-                className={`px-10 py-3 rounded-md font-medium transition-colors cursor-pointer ${
-                  step === (isPackageMode ? 1 : 0)
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed "
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {t("menu.back")}
-              </button>
-              <button
-                onClick={handleNext}
-                disabled={!canGoNext()}
-                className={`px-12 py-3 rounded-md font-medium transition-all shadow-md cursor-pointer ${
-                  canGoNext()
-                    ? "bg-green-500 text-white hover:bg-green-700 shadow-green-500/20"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed shadow-none"
-                }`}
-              >
-                {t("menu.next")}
-              </button>
-            </div>
+          )}
+
+          {/* Actions */}
+          <div className="flex justify-between w-full">
+            <button
+              onClick={handleBack}
+              disabled={step === (isPackageMode ? 1 : 0)}
+              className={`px-10 py-3 rounded-md font-medium transition-colors cursor-pointer ${
+                step === (isPackageMode ? 1 : 0)
+                  ? "bg-white text-gray-400 border border-gray-200 cursor-not-allowed"
+                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 shadow-sm"
+              }`}
+            >
+              {t("menu.back")}
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={!canGoNext()}
+              className={`px-12 py-3 rounded-md font-medium transition-all shadow-md cursor-pointer ${
+                canGoNext()
+                  ? "bg-[#5D6F56] text-white hover:bg-[#4A5944] shadow-[#5D6F56]/20"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed shadow-none"
+              }`}
+            >
+              {t("menu.next")}
+            </button>
           </div>
         </div>
       )}

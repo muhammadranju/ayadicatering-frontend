@@ -1,8 +1,13 @@
 import BuildYourMenu from "./BuildYourMenu";
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "Build Your Menu - AYADI",
-  description: "Build Your Menu ",
+export const metadata: Metadata = {
+  title: "Build Your Custom Menu | AYADI Catering",
+  description:
+    "Create your perfect catering menu. Select from salads, appetizers, main courses, and desserts to suit your event needs.",
+  alternates: {
+    canonical: "https://www.ayadicatering.com/build-your-menu",
+  },
 };
 
 interface PageProps {
