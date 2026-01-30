@@ -1,12 +1,14 @@
 import { Metadata } from "next";
-import { ChangePhoto } from "./ChangePhotoPage";
+import { ChangePhotoPage } from "./ChangePhotoPage";
+
 export const metadata: Metadata = {
-  title: "Change Photo - TechAdvantage",
+  title: "Change Photo - Ayadi Catering",
 };
+
 const page = () => {
   return (
     <div className="min-h-screen bg-white ">
-      <ChangePhoto />
+      <ChangePhotoPage />
     </div>
   );
 };

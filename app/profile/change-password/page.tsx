@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { ChangePasswordPage } from "./ChangePasswordPage";
 export const metadata: Metadata = {
-  title: "Change Password - TechAdvantage",
+  title: "Change Password - Ayadi Catering",
 };
 
 const page = () => {
