@@ -110,10 +110,10 @@ const RecentWorks: React.FC = () => {
             <h2 className="text-4xl md:text-6xl font-semibold text-gray-900 mb-2">
               {t("gallery.recentTitle")}
             </h2>
-            <span className="text-4xl md:text-6xl text-orange-500 font-semibold">
+            <span className="text-4xl md:text-7xl text-orange-500 font-semibold">
               {t("gallery.recentTitleSpan")}
             </span>
-            <p className="text-gray-900 mt-4 text-sm tracking-wide max-w-xl">
+            <p className="text-gray-900 font-medium mt-4 text-sm tracking-wide max-w-xl">
               {t("gallery.recentDesc")}
             </p>
           </div>
@@ -157,10 +157,6 @@ const RecentWorks: React.FC = () => {
 
           <div className="col-span-12 md:col-span-3 min-h-[220px] md:min-h-[270px]">
             <GalleryImage imageKey="11" />
-          </div>
-
-          <div className="col-span-12 md:col-span-5 min-h-[420px] md:min-h-[520px]">
-            <GalleryImage imageKey="12" />
           </div>
         </div>
       </div>
