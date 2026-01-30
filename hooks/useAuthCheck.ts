@@ -24,9 +24,13 @@ export const useAuthCheck = () => {
 
   useEffect(() => {
     if (error && isAuthenticated) {
-      // If profile fetch fails and we're supposed to be authenticated, logout
-      console.error("Failed to fetch user profile:", error);
-      dispatch(logout());
+      // Only logout if the error is 401 (Unauthorized)
+      if ("status" in error && error.status === 401) {
+        console.error("Failed to fetch user profile (Unauthorized):", error);
+        dispatch(logout());
+      } else {
+        console.error("Failed to fetch user profile:", error);
+      }
     }
   }, [error, isAuthenticated, dispatch]);
 
