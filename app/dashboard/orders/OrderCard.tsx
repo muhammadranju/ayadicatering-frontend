@@ -9,13 +9,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Order } from "@/interface/order.interface";
 import { useUpdateOrderStatusMutation } from "@/lib/redux/features/api/orders/ordersApiSlice";
 import { format } from "date-fns";
-import { Calendar, Clock, Users } from "lucide-react";
+import { Calendar, Clock, Download, Users } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { ExportConfirmationDialog } from "./components/ExportConfirmationDialog";
 
 interface OrderCardProps {
   order: Order;
@@ -25,6 +27,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   const [updateOrderStatus, { isLoading: isUpdating }] =
     useUpdateOrderStatusMutation();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [targetStatus, setTargetStatus] = useState<"confirmed" | "completed">(
     "confirmed",
   );
@@ -164,9 +167,12 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
           View
         </Link>
 
-        {/* <button className="flex items-center gap-2 rounded-full bg-[#D48D73] px-6 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#c47d63]">
+        <Button
+          onClick={() => setIsExportDialogOpen(true)}
+          className="flex items-center gap-2 rounded-full bg-[#D48D73] px-6 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#c47d63]"
+        >
           <Download size={14} /> Export
-        </button> */}
+        </Button>
 
         {order.status === "pending" && (
           <button
@@ -223,6 +229,12 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        <ExportConfirmationDialog
+          open={isExportDialogOpen}
+          onOpenChange={setIsExportDialogOpen}
+          order={order}
+        />
       </div>
     </div>
   );

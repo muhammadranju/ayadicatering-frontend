@@ -1,0 +1,171 @@
+{
+  "success": true,
+  "message": "Order retrieved successfully",
+  "data": {
+    "_id": "697a843f071e766a167cbb66",
+    "orderType": "BUILD_YOUR_OWN",
+    "selectedPackage": null,
+    "menuSelection": {
+      "salad": {
+        "_id": "6979161451ae2c47dc1fc40e",
+        "platterName": "Charred Corn Salad",
+        "platterNameArabic": "ﺔﻳﻮﺸﳌا ةرﺬﻟا ﺔﻄﻠﺳ",
+        "description": "Spinach with charred corn,\r\nparmesan, toasted peanuts,\r\nwith a basil dressing",
+        "descriptionArabic": "لﻮﻔﻟا و ناﲒﻣرﺎﺒﻟﺎﺑ ﺔﻳﻮﺸﻣ ةرذ ﺔﻄﻠﺳ\r\nنﺎﺤﻳﺮﻟا ﺔﺼﻠﺻ ﻊﻣ ،ﺺّﻤﺤﳌا ﱐادﻮﺴﻟا",
+        "image": "/image/4-1769543188654.jpg",
+        "price": 295,
+        "isAvailable": true,
+        "categoryId": "697522b1647a58db71565121",
+        "createdAt": "2026-01-27T19:46:28.684Z",
+        "updatedAt": "2026-01-27T19:46:28.684Z",
+        "__v": 0
+      },
+      "appetizers": [
+        {
+          "_id": "6979174651ae2c47dc1fc433",
+          "platterName": "Korean Chicken Drumsticks",
+          "platterNameArabic": "يرﻮﻜﻟا صﻮﺼﻟﺎﺑ جﺎﺟد",
+          "description": "Fried chicken drumsticks\r\ncoated in a Korean-style\r\nchili sauce topped with sesame",
+          "descriptionArabic": "ﺔﻳرﻮﻛ ﺔﺼﻠﺼﺑ ﺔﻴﻠﻘﻣ جﺎﺟد ذﺎﺨﻓأ\r\nﻢﺴﻤﺴﻟﺎﺑ ﺔﻨّﻳﺰﻣو ةرﺎﺣ",
+          "image": "/image/6-1769543494800.jpg",
+          "price": 365,
+          "isAvailable": true,
+          "categoryId": "697524de647a58db71565131",
+          "createdAt": "2026-01-27T19:51:34.834Z",
+          "updatedAt": "2026-01-27T19:51:34.834Z",
+          "__v": 0
+        },
+        {
+          "_id": "6979171151ae2c47dc1fc42e",
+          "platterName": "Creamy Mashed Potatoes",
+          "platterNameArabic": "ﺔﺳوﺮﻬﻣ ﺲﻃﺎﻄﺑ",
+          "description": "Smooth and buttery\r\nmashed potatoes",
+          "descriptionArabic": "ﺔﻤﻋﺎﻧ ﺔﺳوﺮﻬﻣ ﺲﻃﺎﻄﺑ\r\nةﺪﺑﺰﻟﺎﺑ ﺔﻴﻤﻳﺮﻛو",
+          "image": "/image/5-1769543441902.jpg",
+          "price": 365,
+          "isAvailable": true,
+          "categoryId": "697524de647a58db71565131",
+          "createdAt": "2026-01-27T19:50:41.935Z",
+          "updatedAt": "2026-01-27T19:50:41.935Z",
+          "__v": 0
+        }
+      ],
+      "mains": [
+        {
+          "_id": "69791c3b51ae2c47dc1fc46a",
+          "platterName": "Seared Seabass",
+          "platterNameArabic": "نﻮﻤﻴﻠﻟﺎﺑ ﻚﻤﺳ",
+          "description": "Seared seabass fillet with a lemon\r\nbutter sauce and cherry tomatoes",
+          "descriptionArabic": "ﺔﺼﻠﺼﺑ سورﺎﻘﻟا ﻚﻤﺳ ﻪﻴﻠﻴﻓ\r\nﺔﻳزﺮﻛ ﻢﻃﺎﻤﻃ ﻊﻣ ةﺪﺑﺰﻟاو نﻮﻤﻴﻠﻟا",
+          "image": "/image/10-1769544763283.png",
+          "price": 395,
+          "isAvailable": true,
+          "categoryId": "69752508647a58db71565133",
+          "createdAt": "2026-01-27T20:12:43.341Z",
+          "updatedAt": "2026-01-27T20:12:43.341Z",
+          "__v": 0
+        },
+        {
+          "_id": "69791c1a51ae2c47dc1fc465",
+          "platterName": "Pesto Orzo",
+          "platterNameArabic": "ﻮﺘﺴﻴﺒﻟا ﺔﺼﻠﺼﺑ وزروأ",
+          "description": "Orzo pasta tossed with basil\r\npesto and parmesan",
+          "descriptionArabic": "ﻮﺘﺴﻴﺒﻟا ﺔﺼﻠﺼﺑ وزروأ ﺔﻧوﺮﻜﻣ\r\nناﲒﻣرﺎﺒﻟاو",
+          "image": "/image/9-1769544730664.png",
+          "price": 395,
+          "isAvailable": true,
+          "categoryId": "69752508647a58db71565133",
+          "createdAt": "2026-01-27T20:12:10.721Z",
+          "updatedAt": "2026-01-27T20:12:10.721Z",
+          "__v": 0
+        },
+        {
+          "_id": "69791bb351ae2c47dc1fc451",
+          "platterName": "Seabass Kozbariya",
+          "platterNameArabic": "ﻚﻤﺳ",
+          "description": "Seabass fillet in a coriander\r\ntomato sauce",
+          "descriptionArabic": "صورﺎﻘﻟا ﻚﻤﺳ ﻪﻴﻠﻴﻓ\r\nﻢﻃﺎﻤﻄﻟاو ةﺮﺑﺰﻜﻟا ﺔﺼﻠﺼﺑ",
+          "image": "/image/5-1769544627403.jpg",
+          "price": 395,
+          "isAvailable": true,
+          "categoryId": "69752508647a58db71565133",
+          "createdAt": "2026-01-27T20:10:27.492Z",
+          "updatedAt": "2026-01-27T20:10:27.492Z",
+          "__v": 0
+        }
+      ]
+    },
+    "addons": [
+      "white-rice",
+      "grilled-vegetables",
+      "sauces",
+      {
+        "_id": "69791c1a51ae2c47dc1fc465",
+        "platterName": "Pesto Orzo",
+        "platterNameArabic": "ﻮﺘﺴﻴﺒﻟا ﺔﺼﻠﺼﺑ وزروأ",
+        "description": "Orzo pasta tossed with basil\r\npesto and parmesan",
+        "descriptionArabic": "ﻮﺘﺴﻴﺒﻟا ﺔﺼﻠﺼﺑ وزروأ ﺔﻧوﺮﻜﻣ\r\nناﲒﻣرﺎﺒﻟاو",
+        "image": "/image/9-1769544730664.png",
+        "price": 395,
+        "isAvailable": true,
+        "categoryId": "69752508647a58db71565133",
+        "createdAt": "2026-01-27T20:12:10.721Z",
+        "updatedAt": "2026-01-27T20:12:10.721Z",
+        "__v": 0
+      },
+      {
+        "_id": "6979171151ae2c47dc1fc42e",
+        "platterName": "Creamy Mashed Potatoes",
+        "platterNameArabic": "ﺔﺳوﺮﻬﻣ ﺲﻃﺎﻄﺑ",
+        "description": "Smooth and buttery\r\nmashed potatoes",
+        "descriptionArabic": "ﺔﻤﻋﺎﻧ ﺔﺳوﺮﻬﻣ ﺲﻃﺎﻄﺑ\r\nةﺪﺑﺰﻟﺎﺑ ﺔﻴﻤﻳﺮﻛو",
+        "image": "/image/5-1769543441902.jpg",
+        "price": 365,
+        "isAvailable": true,
+        "categoryId": "697524de647a58db71565131",
+        "createdAt": "2026-01-27T19:50:41.935Z",
+        "updatedAt": "2026-01-27T19:50:41.935Z",
+        "__v": 0
+      },
+      {
+        "_id": "697915ad51ae2c47dc1fc409",
+        "platterName": "Crunchy Chickpea",
+        "platterNameArabic": "ﺶﻣﺮﻘﳌا ﺺﻤﺤﻟا ﺔﻄﻠﺳ",
+        "description": "Iceberg lettuce topped with\r\ncrunchy chickpeas, with a\r\ncreamy tahina dressing",
+        "descriptionArabic": "ﺔﺼﻠﺻ ﻊﻣ ﺶﻣﺮﻘﳌا ﺺﻤﺤﻟﺎﺑ ﺔﻄﻠﺳ\r\nﺔﻴﻤﻳﺮﻜﻟا ﺔﻨﻴﺤﻄﻟ",
+        "image": "/image/3-1769543085346.jpg",
+        "price": 295,
+        "isAvailable": true,
+        "categoryId": "697522b1647a58db71565121",
+        "createdAt": "2026-01-27T19:44:45.366Z",
+        "updatedAt": "2026-01-27T19:44:45.366Z",
+        "__v": 0
+      }
+    ],
+    "dateTime": {
+      "date": "2026-01-30T18:00:00.000Z",
+      "time": "06:00 PM"
+    },
+    "deliveryDetails": {
+      "street": "Jarir Street, Al Malaz District, Riyadh, Riyadh governorate, Riyadh Region, 12836, Saudi Arabia",
+      "city": "Riyadh",
+      "area": "Al Malaz District",
+      "whatsapp": "384581451210",
+      "email": "fidusycala@mailinator.com",
+      "note": "Nihil praesentium re"
+    },
+    "paymentMethod": "credit",
+    "pricing": {
+      "basePrice": 2210,
+      "addonsPrice": 1245,
+      "subtotal": 3455,
+      "vat": 518.25,
+      "total": 3973.25
+    },
+    "status": "confirmed",
+    "timestamp": "2026-01-28T21:48:47.466Z",
+    "createdAt": "2026-01-28T21:48:47.470Z",
+    "updatedAt": "2026-01-30T18:57:19.630Z",
+    "__v": 0
+  }
+}

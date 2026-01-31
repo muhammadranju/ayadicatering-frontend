@@ -1,27 +1,5 @@
 "use client";
 
-import React from "react";
-import {
-  Download,
-  User,
-  Calendar,
-  CreditCard,
-  Package,
-  ChevronDown,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  useGetOrderByIdQuery,
-  useUpdateOrderStatusMutation,
-} from "@/lib/redux/features/api/orders/ordersApiSlice";
-import { format } from "date-fns";
-import BackButton from "@/components/logo/BackButton";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,19 +10,45 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  useGetOrderByIdQuery,
+  useUpdateOrderStatusMutation,
+} from "@/lib/redux/features/api/orders/ordersApiSlice";
+import { format } from "date-fns";
+import {
+  ArrowLeft,
+  Calendar,
+  ChevronDown,
+  CreditCard,
+  Download,
+  Package,
+  User,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
+import { ExportConfirmationDialog } from "../components/ExportConfirmationDialog";
 
 interface OrderDetailsProps {
   orderId: string;
 }
 
 export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
+  const router = useRouter();
   const { data: orderData, isLoading } = useGetOrderByIdQuery(orderId);
   const [updateOrderStatus, { isLoading: isUpdating }] =
     useUpdateOrderStatusMutation();
   const order = orderData?.data;
 
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = React.useState(false);
+  const [isExportDialogOpen, setIsExportDialogOpen] = React.useState(false);
   const [pendingStatus, setPendingStatus] = React.useState<string | null>(null);
 
   const handleStatusChangeClick = (newStatus: string) => {
@@ -125,7 +129,14 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
   return (
     <div className="flex-1 px-6 py-8 lg:px-10">
       {/* Top Actions */}
-      <BackButton />
+      <Button
+        onClick={() => router.back()}
+        className="mb-6 flex flex-col w-fit justify-between gap-4 sm:flex-row sm:items-center shadow p-5 rounded-lg transition-all duration-300 ease-in-out  "
+      >
+        {/* <BackButton /> */}
+        <ArrowLeft className="transition-transform duration-300 ease-in-out group-hover:-translate-x-1 " />
+        Back
+      </Button>
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center shadow p-5 rounded-lg bg-white">
         <div className="flex gap-4">
           <DropdownMenu>
@@ -180,7 +191,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
             {order.orderType}
           </Button>
         </div>
-        <Button className="flex items-center justify-center px-20 gap-2 rounded-full bg-orange-600 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-orange-600/90">
+        <Button
+          onClick={() => setIsExportDialogOpen(true)}
+          className="flex items-center justify-center px-20 gap-2 rounded-full bg-orange-600 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-orange-600/90"
+        >
           <Download size={16} /> EXPORT
         </Button>
       </div>
@@ -386,7 +400,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                 order.menuSelection.appetizers.length > 0 && (
                   <div>
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
-                      APPETIZERS
+                      CLASSICS
                     </p>
                     <ul className="space-y-1">
                       {order.menuSelection.appetizers.map(
@@ -424,6 +438,30 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
                     </ul>
                   </div>
                 )}
+
+              {/* Addons */}
+              {order.addons && order.addons.length > 0 && (
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">
+                    ADD-ONS
+                  </p>
+                  <ul className="space-y-1">
+                    {order.addons.map(
+                      (
+                        item: string | { platterName: string },
+                        index: number,
+                      ) => (
+                        <li
+                          key={index}
+                          className="text-sm font-medium text-gray-900"
+                        >
+                          • {typeof item === "string" ? item : item.platterName}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -518,6 +556,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <ExportConfirmationDialog
+        open={isExportDialogOpen}
+        onOpenChange={setIsExportDialogOpen}
+        order={order}
+      />
     </div>
   );
 };
