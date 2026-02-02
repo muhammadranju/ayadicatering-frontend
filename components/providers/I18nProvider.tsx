@@ -21,6 +21,7 @@ export default function I18nProvider({
     const handleLanguageChanged = (lng: string) => {
       document.documentElement.dir = i18n.dir(lng);
       document.documentElement.lang = lng;
+      localStorage.setItem("i18nextLng", lng);
     };
 
     i18n.on("languageChanged", handleLanguageChanged);
