@@ -2,15 +2,7 @@ import React from "react";
 import { Info, Map, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MapModal from "@/components/pages/home/buildYourMenu/steps/MapModal";
-
-interface DeliveryDetails {
-  street: string;
-  city: string;
-  area: string;
-  whatsapp: string;
-  email: string;
-  note: string;
-}
+import { DeliveryDetails } from "../types";
 
 interface StepDeliveryProps {
   deliveryDetails: DeliveryDetails;
@@ -62,7 +54,31 @@ const StepDelivery: React.FC<StepDeliveryProps> = ({
 
         <div className="space-y-6">
           <div>
-            <label 
+            <label
+              htmlFor="name-input"
+              className="block text-sm font-semibold text-charcoal mb-2"
+            >
+              {t("menu.steps.name") || "Full Name"}
+            </label>
+            <input
+              id="name-input"
+              type="text"
+              value={deliveryDetails.name}
+              onChange={(e) =>
+                setDeliveryDetails({
+                  ...deliveryDetails,
+                  name: e.target.value,
+                })
+              }
+              className="w-full px-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all placeholder:text-gray-300"
+              placeholder={
+                t("menu.steps.namePlaceholder") || "Enter your full name"
+              }
+            />
+          </div>
+
+          <div>
+            <label
               htmlFor="street-input"
               className="block text-sm font-semibold text-charcoal mb-2"
             >

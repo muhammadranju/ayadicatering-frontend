@@ -39,9 +39,15 @@ const LocationMarker = ({
 };
 
 const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
-  // Config: Center on Riyadh, Saudi Arabia
-  const defaultCenter = { lat: 24.7136, lng: 46.6753 };
-  const defaultZoom = 10;
+  // Config: Center on Jeddah, Saudi Arabia
+  const defaultCenter = { lat: 21.5433, lng: 39.1728 };
+  const defaultZoom = 12;
+
+  // Bounds for Jeddah (approximate)
+  const jeddahBounds: L.LatLngBoundsExpression = [
+    [21.0, 38.9], // South West
+    [22.0, 39.4], // North East
+  ];
 
   return (
     <MapContainer
@@ -49,6 +55,9 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
       zoom={defaultZoom}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
+      maxBounds={jeddahBounds}
+      maxBoundsViscosity={1.0}
+      minZoom={10}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

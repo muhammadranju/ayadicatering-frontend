@@ -44,12 +44,12 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
 
   if (!isOpen) return null;
 
-  // Approx Bounding Box for Saudi Arabia
-  const SAUDI_BOUNDS = {
-    north: 32.2,
-    south: 16.0,
-    west: 34.0,
-    east: 56.0,
+  // Approx Bounding Box for Jeddah City
+  const JEDDAH_BOUNDS = {
+    north: 22.0,
+    south: 21.0,
+    west: 38.9,
+    east: 39.4,
   };
 
   const handleLocationSelect = async (lat: number, lng: number) => {
@@ -59,12 +59,14 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
 
     // Validate Location
     if (
-      lat > SAUDI_BOUNDS.north ||
-      lat < SAUDI_BOUNDS.south ||
-      lng < SAUDI_BOUNDS.west ||
-      lng > SAUDI_BOUNDS.east
+      lat > JEDDAH_BOUNDS.north ||
+      lat < JEDDAH_BOUNDS.south ||
+      lng < JEDDAH_BOUNDS.west ||
+      lng > JEDDAH_BOUNDS.east
     ) {
-      setError("We apologize, but this address is outside our delivery area.");
+      setError(
+        "We apologize, but this address is outside Jeddah City limits. Please select a location within Jeddah.",
+      );
       return;
     }
 
@@ -154,8 +156,8 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
     if (error) return;
 
     // Use fetched data or fallback
-    const city = addressData?.city || "Riyadh";
-    const area = addressData?.area || "Al Malqa";
+    const city = addressData?.city || "Jeddah City";
+    const area = addressData?.area || "Jeddah";
     const street =
       addressData?.street ||
       `Lat: ${selectedLocation.lat.toFixed(4)}, Lng: ${selectedLocation.lng.toFixed(4)}`;

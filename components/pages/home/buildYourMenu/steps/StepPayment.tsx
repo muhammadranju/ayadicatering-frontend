@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import { CheckCircle2, CreditCard } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { FaApple, FaCcVisa, FaRegCreditCard } from "react-icons/fa6";
+import { DeliveryDetails } from "../types";
 
 interface StepPaymentProps {
   paymentMethod: string;
@@ -17,17 +17,15 @@ interface StepPaymentProps {
   selectedPackage?: { platterName?: string; person?: number | string };
   onComplete: () => void;
   isLoading?: boolean;
+  deliveryDetails: DeliveryDetails;
 }
 
 const StepPayment: React.FC<StepPaymentProps> = ({
-  paymentMethod,
-  setPaymentMethod,
+  // paymentMethod,
+  // setPaymentMethod,
   selectedDate,
   selectedTime,
-  subtotal,
-  vat,
   total,
-  basePrice,
   isPackageMode = false,
   selectedPackage,
   onComplete,
@@ -47,111 +45,32 @@ const StepPayment: React.FC<StepPaymentProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Payment Methods */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white/90 border-2 border-gray-200 p-6 rounded-lg">
-            <h3 className="font-medium text-lg mb-4 text-charcoal">
-              {t("menu.steps.paymentMethod")}
+          <div className="bg-white/90 border-2 border-gray-200 p-8 rounded-lg flex flex-col items-center justify-center min-h-[300px]">
+            <CreditCard size={64} className="text-gray-300 mb-6" />
+            <h3 className="font-medium text-xl mb-2 text-charcoal text-center">
+              {t("menu.steps.securePayment") || "Secure Payment"}
             </h3>
-            <div className="flex gap-4">
-              <button
-                onClick={() => setPaymentMethod("credit")}
-                className={`flex-1 py-6 border rounded-xl flex flex-col items-center gap-3 transition-all duration-200 cursor-pointer ${
-                  paymentMethod === "credit"
-                    ? "border-green-500 bg-[#E6FAF2] text-green-500 ring-1 ring-green-500"
-                    : "border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600"
-                }`}
-              >
-                <FaRegCreditCard size={28} />
-                <span className="text-sm font-semibold">
-                  {t("menu.steps.credit")}
-                </span>
-              </button>
-              <button
-                onClick={() => setPaymentMethod("mada")}
-                className={`flex-1 py-6 border rounded-xl flex flex-col items-center gap-3 transition-all duration-200 cursor-pointer ${
-                  paymentMethod === "mada"
-                    ? "border-green-500 bg-[#E6FAF2] text-green-500 ring-1 ring-green-500"
-                    : "border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600"
-                }`}
-              >
-                <FaCcVisa size={28} />
-                <span className="text-sm font-semibold">
-                  {t("menu.steps.mada")}
-                </span>
-              </button>
-              <button
-                onClick={() => setPaymentMethod("apple")}
-                className={`flex-1 py-6 border rounded-xl flex flex-col items-center gap-3 transition-all duration-200 cursor-pointer ${
-                  paymentMethod === "apple"
-                    ? "border-green-500 bg-[#E6FAF2] text-green-500 ring-1 ring-green-500"
-                    : "border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600"
-                }`}
-              >
-                <FaApple size={28} />
-                <span className="text-sm font-semibold">
-                  {t("menu.steps.apple")}
-                </span>
-              </button>
-            </div>
-          </div>
+            <p className="text-gray-500 text-center max-w-md mb-8">
+              {t("menu.steps.paymentDescription") ||
+                "You will be redirected to our secure payment gateway to complete your purchase."}
+            </p>
 
-          <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
-            <h4 className="font-medium mb-6 text-charcoal text-lg">
-              {t("menu.steps.cardDetails")}
-            </h4>
-            <div className="space-y-5">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                  {t("menu.steps.cardNumber")}
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="1234 5678 9012 3456"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
-                  />
-                  <CreditCard
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
-                    size={20}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                  {t("menu.steps.cardHolder")}
-                </label>
-                <input
-                  type="text"
-                  placeholder="Name on card"
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                    {t("menu.steps.expiry")}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="MM/YY"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                    {t("menu.steps.cvv")}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="123"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex items-center gap-3 text-xs text-gray-500 bg-gray-50 p-3 rounded-lg border border-gray-100">
-              <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 animate-pulse"></div>
-              {t("menu.steps.secure")}
-            </div>
+            <button
+              onClick={onComplete}
+              disabled={isLoading}
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-12 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-green-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3 cursor-pointer"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  {t("menu.steps.payNow") || "Pay Now"} ({total} SAR)
+                </>
+              )}
+            </button>
           </div>
 
           <div className="bg-white border border-gray-100 rounded-xl p-5 flex items-start gap-3 shadow-sm">
@@ -198,61 +117,15 @@ const StepPayment: React.FC<StepPaymentProps> = ({
                   </p>
                 )}
               </div>
-              <div className="flex justify-between px-2 pt-4 mt-4 text-sm text-gray-800 font-medium border-t border-gray-100">
-                <span>
-                  {isPackageMode ? "Package Price" : "Menu Base Price"}
-                </span>
-                <span>{basePrice.toFixed(2)} SAR</span>
-              </div>
             </div>
-
-            <div className="pb-6 border-b border-gray-100 space-y-3">
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>{t("menu.steps.subtotal")}</span>
-                <span>{subtotal.toFixed(2)} SAR</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>{t("menu.steps.vat")} (15%)</span>
-                <span>{vat.toFixed(2)} SAR</span>
-              </div>
-              <div className="flex justify-between text-sm text-green-500 font-bold">
-                <span>{t("menu.steps.deliveryLabel")}</span>
-                <span>{t("menu.steps.free")}</span>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-end pt-2">
-              <span className=" text-xl text-charcoal">
-                {t("menu.steps.total")}
+            <div className="flex justify-between items-center pt-2">
+              <span className="font-bold text-gray-800 text-lg">
+                {t("menu.total")}:
               </span>
-              <div className="text-right">
-                <span className="font-bold text-2xl text-[#B34545] block">
-                  {total.toFixed(2)} SAR
-                </span>
-                <span className="text-xs text-gray-400 font-light">
-                  {t("menu.steps.inclusiveVat")}
-                </span>
-              </div>
+              <span className="font-bold text-green-600 text-xl">
+                {total.toLocaleString()} SAR
+              </span>
             </div>
-
-            <button
-              onClick={onComplete}
-              disabled={isLoading}
-              className={`w-full py-4 rounded-lg font-medium transition-all mt-6 text-lg flex justify-center items-center gap-2 ${
-                isLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-500 text-white hover:bg-[#14452F] hover:shadow-lg hover:shadow-green-500/20"
-              }`}
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                t("menu.steps.completePayment")
-              )}
-            </button>
           </div>
         </div>
       </div>
