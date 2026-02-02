@@ -5,8 +5,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NotificationBell } from "./NotificationBell";
 import { useAuthCheck } from "@/hooks/useAuthCheck";
-import { Bell, Camera, Lock } from "lucide-react";
+import { Camera, Lock } from "lucide-react";
 import Link from "next/link";
 import { PiPencilFill } from "react-icons/pi";
 import { SpinnerCustom } from "../ui/SpinnerCustom";
@@ -43,13 +44,7 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-10 px-10 py-4 bg-neutral/80 backdrop-blur-md border-neutral-200/20 w-full">
       <div className="flex items-center justify-end space-x-4">
         <div className="flex items-center gap-6">
-          <Link
-            href="/dashboard/notifications"
-            className="relative text-gray-400 hover:text-gray-600"
-          >
-            <Bell size={20} />
-            <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-orange-500"></span>
-          </Link>
+          <NotificationBell />
 
           <div className="hidden items-center gap-3 sm:flex">
             {!isLoading && (
