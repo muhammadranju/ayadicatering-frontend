@@ -118,6 +118,7 @@
   "menu": {
     "title": "Build Your Menu",
     "subtitle": "Gatherings by Ayadi serves up to 10 guests. Select your perfect combination.",
+    "total": "Total",
     "selectedAddons": "Selected Add-ons",
     "noAddons": "No add-ons selected",
     "chooseOption": "Choose option",
@@ -131,6 +132,10 @@
     "error": "Please complete the selection",
     "steps": {
       "menuSelection": "Menu Selection",
+      "name": "Full Name",
+      "securePayment": "Secure Payment",
+      "paymentDescription": "You will be redirected to our secure payment gateway to complete your purchase.",
+      "payNow": "Pay Now",
       "delivery": "Delivery Details",
       "dateTime": "Date & Time",
       "payment": "Payment",
@@ -189,8 +194,8 @@
       "total": "Total",
       "inclusiveVat": "Inclusive of VAT",
       "completePayment": "Complete Payment",
-      "successTitle": "Your Order is Confirmed!",
-      "successDesc": "Thank you for choosing Ayadi for your stress-free hosting experience. We handle every order with attention to detail, from preparation to delivery, so you can enjoy the moments around your table.",
+      "successTitle": "Your Order is Placed!",
+      "successDesc": "Thank you for choosing Ayadi. Your order has been placed and is currently Pending confirmation. We will review it shortly.",
       "backToHome": "Back to Home"
     },
     "items": {
@@ -333,5 +338,14 @@
     "gallery": "Gallery",
     "address": "Jeddah, Saudi Arabia",
     "copyright": "Ayadi. All Rights Reserved."
+  },
+  "payment": {
+    "successTitle": "Payment Successful",
+    "successDesc": "Your booking has been confirmed. Thank you for choosing Ayadi Catering.",
+    "failTitle": "Payment Failed",
+    "failDesc": "We couldn't process your payment. This could be due to a cancelled transaction or a bank decline.",
+    "paymentRef": "Payment Reference",
+    "tryAgain": "Try Again",
+    "BackToHome": "Back to Home"
   }
 }
