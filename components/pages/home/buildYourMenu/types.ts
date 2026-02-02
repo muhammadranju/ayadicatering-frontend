@@ -32,3 +32,13 @@ export interface OrderState {
   mains: string[];
   addons: string[];
 }
+
+export interface DeliveryDetails {
+  name: string;
+  street: string;
+  city: string;
+  area: string;
+  whatsapp: string;
+  email: string;
+  note: string;
+}

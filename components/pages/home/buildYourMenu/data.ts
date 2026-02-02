@@ -215,6 +215,14 @@ const ADDONS: MenuItem[] = [
 ];
 
 const TIME_SLOTS = [
+  "01:00 AM",
+  "02:00 AM",
+  "03:00 AM",
+  "04:00 AM",
+  "05:00 AM",
+  "06:00 AM",
+  "07:00 AM",
+  "08:00 AM",
   "09:00 AM",
   "10:00 AM",
   "11:00 AM",
@@ -227,6 +235,10 @@ const TIME_SLOTS = [
   "06:00 PM",
   "07:00 PM",
   "08:00 PM",
+  "09:00 PM",
+  "10:00 PM",
+  "11:00 PM",
+  "12:00 AM",
 ];
 
 const STEPS = [
