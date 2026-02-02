@@ -11,6 +11,7 @@ import StepSuccess from "@/components/pages/home/buildYourMenu/steps/StepSuccess
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCreateOrderMutation } from "@/lib/redux/features/api/orders/ordersApiSlice";
+import { useInitiatePaymentMutation } from "@/lib/redux/features/api/payment/paymentApiSlice";
 import { toast } from "sonner";
 
 import { useGetSetPackageListQuery } from "@/lib/redux/features/api/set-package/setPackageApiSlice";
@@ -26,7 +27,8 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   isPackageMode = false,
   packageId,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
   const [step, setStep] = useState(isPackageMode ? 1 : 0);
 
   // Fetch Set Packages to find the selected one
@@ -63,6 +65,7 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
 
   // --- STEP 2: Delivery Details ---
   const [deliveryDetails, setDeliveryDetails] = useState({
+    name: "",
     street: "",
     city: "",
     area: "",
@@ -288,6 +291,7 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     if (step === 1) return selectedDate && selectedTime;
     if (step === 2)
       return (
+        deliveryDetails.name &&
         deliveryDetails.street &&
         deliveryDetails.city &&
         deliveryDetails.whatsapp &&
@@ -309,12 +313,28 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   // Inside component:
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [createOrder, { isLoading: isSubmitting }] = useCreateOrderMutation();
+  const [initiatePayment, { isLoading: isPaymentLoading }] =
+    useInitiatePaymentMutation();
 
   // --- NEW: Data Aggregation & Logging ---
   const handleCompleteBooking = async () => {
+    // Validate required fields
+    if (
+      !deliveryDetails.name ||
+      !deliveryDetails.email ||
+      !deliveryDetails.whatsapp ||
+      !deliveryDetails.street ||
+      !deliveryDetails.city ||
+      !deliveryDetails.area
+    ) {
+      toast.error(t("menu.error") || "Please complete all delivery details");
+      return;
+    }
+
     // 1. Organize selected menu items
     const bookingData = {
       orderType: isPackageMode ? "SET_PACKAGE" : "BUILD_YOUR_OWN",
+      status: "pending",
       // Include selected package details if in package mode
       selectedPackage: isPackageMode ? selectedPackage : null,
 
@@ -347,24 +367,54 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     console.groupEnd();
 
     try {
-      await createOrder(bookingData).unwrap();
+      const orderResponse = await createOrder(bookingData).unwrap();
 
       // Save order time to localStorage to prevent multiple orders for same date within 5 hours
       if (selectedDate) {
         saveOrderTime(format(selectedDate, "yyyy-MM-dd"));
       }
 
-      toast.success(t("Order placed successfully!"));
-      // Proceed to Success Step
-      handleNext();
-    } catch (error) {
-      console.error("Failed to create order:", error);
-      toast.error(t("Failed to place order. Please try again."));
+      // 2. Initiate Payment with the created Order ID
+      if (orderResponse?.data?._id) {
+        const paymentData = {
+          amount: total,
+          currency: "SAR",
+
+          description: `Order #${orderResponse.data._id}`,
+          orderId: orderResponse.data._id,
+          customerDetails: {
+            name: deliveryDetails.name,
+            email: deliveryDetails.email,
+            phone: deliveryDetails.whatsapp,
+            street: deliveryDetails.street,
+            city: deliveryDetails.city,
+            state: deliveryDetails.area,
+            country: "SA",
+            zip: "00000",
+          },
+          lang: isArabic ? "ar" : "en",
+        };
+
+        const paymentResponse = await initiatePayment(paymentData).unwrap();
+
+        if (paymentResponse.success && paymentResponse.data) {
+          toast.success("Order created! Redirecting to payment...");
+          window.location.href = paymentResponse.data;
+        } else {
+          toast.error(paymentResponse.message || "Payment initiation failed");
+        }
+      } else {
+        // Fallback if no ID returned (shouldn't happen with standard API)
+        toast.success(t("Order placed successfully!"));
+        handleNext();
+      }
+    } catch (error: any) {
+      console.error("Failed to process order/payment:", error);
+      toast.error(
+        error?.data?.message || "Failed to place order. Please try again.",
+      );
     }
   };
-
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
 
   return (
     <div className="w-full max-w-7xl pb-40 mx-auto">
@@ -435,6 +485,8 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
             isPackageMode={isPackageMode}
             selectedPackage={selectedPackage}
             onComplete={handleCompleteBooking}
+            deliveryDetails={deliveryDetails}
+            isLoading={isSubmitting || isPaymentLoading}
           />
         )}
         {step === 4 && <StepSuccess />}
@@ -485,7 +537,7 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
                   {t("menu.totalAddons")}:
                 </span>
                 <span className="font-bold text-gray-800 text-lg">
-                  {(total * 1.15).toLocaleString(undefined, {
+                  {total.toLocaleString(undefined, {
                     maximumFractionDigits: 0,
                   })}{" "}
                   {t("menu.SARprice")}
