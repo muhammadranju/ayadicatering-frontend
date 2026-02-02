@@ -192,54 +192,66 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
     if (!selectedDate) return { restricted: false };
 
     // 2. Check 5-hour gap rule
-    // try {
-    //   const now = new Date();
-    //   // Parse the time slot (e.g. "09:00 AM")
-    //   const slotDate = parse(timeSlot, "hh:mm a", selectedDate);
+    try {
+      const now = new Date();
+      // Parse the time slot (e.g. "09:00 AM")
+      const slotDate = parse(timeSlot, "hh:mm a", selectedDate);
 
-    //   // If parsing fails or invalid date, don't restrict (fallback)
-    //   if (!slotDate || isNaN(slotDate.getTime())) return { restricted: false };
+      // If parsing fails or invalid date, don't restrict (fallback)
+      if (!slotDate || isNaN(slotDate.getTime())) return { restricted: false };
 
-    //   // Calculate the minimum allowed time (now + 5 hours)
-    //   const minAllowedTime = addHours(now, 5);
+      // Calculate the minimum allowed time (now + 5 hours)
+      const minAllowedTime = addHours(now, 5);
 
-    //   if (isAfter(minAllowedTime, slotDate)) {
-    //     return {
-    //       restricted: true,
-    //       reason: "Must be at least 5 hours from now",
-    //     };
-    //   }
-    // } catch (error) {
-    //   console.error("Error parsing time slot:", error);
-    // }
+      if (isAfter(minAllowedTime, slotDate)) {
+        return {
+          restricted: true,
+          reason: "Must be at least 5 hours from now",
+        };
+      }
+    } catch (error) {
+      console.error("Error parsing time slot:", error);
+    }
 
     return { restricted: false };
   };
 
   // Convert available time slots from backend format to display format
   const displayTimeSlots = useMemo(() => {
-    // FOR TESTING: Always return all time slots
-    return TIME_SLOTS;
+    // Define allowed hours (9 AM to 8 PM)
+    const filterAllowedHours = (slots: string[]) => {
+      return slots.filter((slot) => {
+        try {
+          // Parse just the time part relative to a reference date
+          const parsed = parse(slot, "hh:mm a", new Date());
+          const hour = parsed.getHours();
+          // 9 AM is 9, 8 PM is 20. Allow inclusive range [9, 20]
+          return hour >= 9 && hour <= 20;
+        } catch (e) {
+          return false;
+        }
+      });
+    };
 
-    // if (!selectedDate || isLoadingTimeSlots) {
-    //   return TIME_SLOTS; // Show default slots while loading
-    // }
+    if (!selectedDate || isLoadingTimeSlots) {
+      return filterAllowedHours(TIME_SLOTS); // Show default slots while loading
+    }
 
-    // // If we have specific available slots from backend, use them
-    // // Note: The backend might return available slots that are already filtered by admin rules
-    // // But we still need to apply the 5-hour gap rule on the frontend
-    // if (availableTimeSlotsData?.data) {
-    //   // If available array is provided, use it. If empty, it means no slots.
-    //   return availableTimeSlotsData.data.available || [];
-    // }
+    // If we have specific available slots from backend, use them
+    // Note: The backend might return available slots that are already filtered by admin rules
+    // But we still need to apply the 5-hour gap rule on the frontend
+    if (availableTimeSlotsData?.data) {
+      // If available array is provided, use it. If empty, it means no slots.
+      return filterAllowedHours(availableTimeSlotsData.data.available || []);
+    }
 
-    // // If selected date is blocked
-    // if (isDateBlocked(selectedDate)) {
-    //   return [];
-    // }
+    // If selected date is blocked
+    if (isDateBlocked(selectedDate)) {
+      return [];
+    }
 
-    // // Otherwise show default time slots
-    // return TIME_SLOTS;
+    // Otherwise show default time slots
+    return filterAllowedHours(TIME_SLOTS);
   }, [selectedDate, availableTimeSlotsData, isLoadingTimeSlots, isDateBlocked]);
 
   return (
