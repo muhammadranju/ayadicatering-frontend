@@ -16,23 +16,54 @@ export interface Notification {
   createdAt: string;
 }
 
+export interface NotificationResponse {
+  data: Notification[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}
+
 export const notificationsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getNotifications: builder.query<Notification[], void>({
-      query: () => "/notifications",
+    getNotifications: builder.query<
+      NotificationResponse,
+      { page?: number; limit?: number } | void
+    >({
+      query: (params) => {
+        const page = params && "page" in params ? params.page : 1;
+        const limit = params && "limit" in params ? params.limit : 10;
+        return `/notifications?page=${page}&limit=${limit}`;
+      },
       providesTags: ["Notification"],
       transformResponse: (response: unknown) => {
-        if (Array.isArray(response)) return response as Notification[];
+        // Default structure
+        const result: NotificationResponse = {
+          data: [],
+          meta: { page: 1, limit: 10, total: 0 },
+        };
 
-        const r = response as { data?: unknown };
-        if (!r?.data) return [];
+        const r = response as any;
 
-        if (Array.isArray(r.data)) return r.data as Notification[];
+        // Handle various response structures
+        if (r?.data?.data && Array.isArray(r.data.data)) {
+          // Structure: { data: { data: [], meta: {} } }
+          result.data = r.data.data;
+          if (r.data.meta) {
+            result.meta = r.data.meta;
+          }
+        } else if (r?.data && Array.isArray(r.data)) {
+          // Structure: { data: [] } (fallback if meta missing)
+          result.data = r.data;
+          result.meta.total = r.data.length;
+        } else if (Array.isArray(r)) {
+          // Structure: []
+          result.data = r;
+          result.meta.total = r.length;
+        }
 
-        const rData = r.data as { data?: unknown };
-        if (Array.isArray(rData?.data)) return rData.data as Notification[];
-
-        return [];
+        return result;
       },
     }),
     markAllAsRead: builder.mutation<void, void>({
