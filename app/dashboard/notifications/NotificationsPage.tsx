@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import {
   Notification,
   useGetNotificationsQuery,
@@ -28,7 +29,27 @@ const getIcon = (type: string) => {
 };
 
 export const NotificationsPage: React.FC = () => {
-  const { data: notifications = [], isLoading } = useGetNotificationsQuery();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const limit = 8;
+
+  const {
+    data: notificationResponse,
+    isLoading,
+    isFetching,
+  } = useGetNotificationsQuery({
+    page: currentPage,
+    limit,
+  });
+
+  const notifications = Array.isArray(notificationResponse?.data)
+    ? notificationResponse.data
+    : [];
+  const meta = notificationResponse?.meta || {
+    page: 1,
+    limit: 10,
+    total: 0,
+  };
+
   const [markAllAsRead, { isLoading: isMarking }] = useMarkAllAsReadMutation();
 
   const unreadCount = notifications.filter(
@@ -45,12 +66,17 @@ export const NotificationsPage: React.FC = () => {
     }
   };
 
+  const totalPages = Math?.ceil(meta.total / limit);
+
   return (
     <div className="flex-1 px-6 py-8 lg:px-10">
       <h3 className="text-4xl font-semibold mb-6 border-b border-gray-200">
         Notifications
       </h3>
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between items-center">
+        <div className="text-sm text-gray-500">
+          Total: {meta.total} notifications
+        </div>
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllRead}
@@ -62,7 +88,7 @@ export const NotificationsPage: React.FC = () => {
         )}
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm mb-6">
         {isLoading ? (
           <div className="p-8 text-center text-gray-500">
             Loading notifications...
@@ -72,41 +98,68 @@ export const NotificationsPage: React.FC = () => {
             No notifications found
           </div>
         ) : (
-          notifications.map((notification: Notification) => (
-            <div
-              key={notification._id}
-              className={`
+          <div className={isFetching ? "opacity-50 pointer-events-none" : ""}>
+            {notifications?.map((notification: Notification) => (
+              <div
+                key={notification._id}
+                className={`
                 flex items-start gap-4 border-b border-gray-200 px-8 py-6 last:border-b-0
                 ${!notification.isRead ? "bg-orange-50" : "bg-white"}
               `}
-            >
-              <div className="mt-1 flex-shrink-0">
-                {getIcon(notification.type)}
+              >
+                <div className="mt-1 flex-shrink-0">
+                  {getIcon(notification.type)}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="text-base text-gray-900 font-medium leading-relaxed">
+                    {notification.message}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {notification.data?.time
+                      ? format(
+                          new Date(notification.data.time),
+                          "MMM d, yyyy 'at' h:mm a",
+                        )
+                      : format(
+                          new Date(notification.createdAt),
+                          "MMM d, yyyy 'at' h:mm a",
+                        )}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    User: {notification.data?.name || "N/A"} | Order ID: #
+                    <span className="uppercase">
+                      {notification.data?.orderId.slice(-6) || "N/A"}
+                    </span>
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-base text-gray-900 font-medium leading-relaxed">
-                  {notification.message}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {notification.data?.time
-                    ? format(
-                        new Date(notification.data.time),
-                        "MMM d, yyyy 'at' h:mm a",
-                      )
-                    : format(
-                        new Date(notification.createdAt),
-                        "MMM d, yyyy 'at' h:mm a",
-                      )}
-                </p>
-                <p className="text-xs text-gray-400">
-                  User: {notification.data?.name || "N/A"} | Order ID:{" "}
-                  {notification.data?.orderId || "N/A"}
-                </p>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4 py-4">
+          <Button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1 || isLoading || isFetching}
+            className="px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-gray-300 rounded-full hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </Button>
+          <span className="text-sm text-gray-600">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages || isLoading || isFetching}
+            className="px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-gray-300 rounded-full hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
