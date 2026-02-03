@@ -6,9 +6,18 @@ import Link from "next/link";
 import { Notification } from "@/lib/redux/features/api/notifications/notificationsApiSlice";
 
 export function NotificationBell() {
-  const { data: notifications = [] } = useGetNotificationsQuery();
+  const { data: notificationResponse } = useGetNotificationsQuery();
 
-  const unreadCount = notifications.filter(
+  // Safely extract notifications array
+  const notifications = Array.isArray(notificationResponse) 
+    ? notificationResponse 
+    : notificationResponse?.data 
+      ? notificationResponse.data 
+      : [];
+
+  const safeNotifications = Array.isArray(notifications) ? notifications : [];
+
+  const unreadCount = safeNotifications.filter(
     (n: Notification) => !n.isRead
   ).length;
 
