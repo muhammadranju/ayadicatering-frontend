@@ -116,17 +116,20 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         {/* Date */}
         <div>
           <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-gray-400">
-            <Calendar size={14} /> DATE
+            <Calendar size={14} /> DELIVERY DATE
           </div>
           <p className="text-sm font-medium text-gray-900">
-            {order.dateTime?.date ? formatDate(order.dateTime.date) : "N/A"}
+            {format(
+              new Date(order.dateTime?.date || order.createdAt),
+              "d MMM yyyy",
+            )}
           </p>
         </div>
 
         {/* Time */}
         <div>
           <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-gray-400">
-            <Clock size={14} /> TIME
+            <Clock size={14} /> DELIVERY TIME
           </div>
           <p className="text-sm font-medium text-gray-900">
             {order.dateTime?.time || "N/A"}
