@@ -1,5 +1,5 @@
 export const ORDER_STORAGE_KEY = "user_order_history";
-export const RESTRICTION_HOURS = 5;
+export const RESTRICTION_HOURS = 1;
 
 interface OrderHistory {
   [date: string]: number; // timestamp of when the order was placed
