@@ -62,15 +62,6 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
     return "N/A";
   };
 
-  // Format date
-  const formatDate = (dateString: string) => {
-    try {
-      return format(new Date(dateString), "yyyy-MM-dd");
-    } catch {
-      return dateString;
-    }
-  };
-
   // Get status badge color
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {

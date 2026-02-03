@@ -44,23 +44,34 @@ export const notificationsApiSlice = apiSlice.injectEndpoints({
           meta: { page: 1, limit: 10, total: 0 },
         };
 
-        const r = response as any;
+        // Define possible response structures to avoid 'any'
+        type RawResponse =
+          | {
+              data: {
+                data: Notification[];
+                meta?: NotificationResponse["meta"];
+              };
+            }
+          | { data: Notification[] }
+          | Notification[];
 
-        // Handle various response structures
-        if (r?.data?.data && Array.isArray(r.data.data)) {
+        const r = response as RawResponse;
+
+        // Handle various response structures with proper type narrowing
+        if (Array.isArray(r)) {
+          // Structure: []
+          result.data = r;
+          result.meta.total = r.length;
+        } else if (Array.isArray(r.data)) {
+          // Structure: { data: [] }
+          result.data = r.data;
+          result.meta.total = r.data.length;
+        } else {
           // Structure: { data: { data: [], meta: {} } }
           result.data = r.data.data;
           if (r.data.meta) {
             result.meta = r.data.meta;
           }
-        } else if (r?.data && Array.isArray(r.data)) {
-          // Structure: { data: [] } (fallback if meta missing)
-          result.data = r.data;
-          result.meta.total = r.data.length;
-        } else if (Array.isArray(r)) {
-          // Structure: []
-          result.data = r;
-          result.meta.total = r.length;
         }
 
         return result;
