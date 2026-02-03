@@ -75,9 +75,11 @@ export const ItemsView: React.FC<ItemsViewProps> = ({
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel className="rounded-xl">
+                      Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
-                      className="bg-red-600 hover:bg-red-700 text-white"
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-xl"
                       onClick={() => onDelete(item._id)}
                     >
                       Delete

@@ -75,11 +75,14 @@ export const CategoriesView: React.FC<CategoriesViewProps> = ({
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
+                    <AlertDialogCancel
+                      onClick={(e) => e.stopPropagation()}
+                      className="rounded-xl"
+                    >
                       Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction
-                      className="bg-red-600 hover:bg-red-700 text-white"
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-xl"
                       onClick={(e) => {
                         e.stopPropagation();
                         onDelete(cat._id);
