@@ -21,12 +21,17 @@ export const notificationsApiSlice = apiSlice.injectEndpoints({
     getNotifications: builder.query<Notification[], void>({
       query: () => "/notifications",
       providesTags: ["Notification"],
-      transformResponse: (response: any) => {
-        if (Array.isArray(response)) return response;
-        if (response?.data?.data && Array.isArray(response.data.data))
-          return response.data.data;
-        if (response?.data && Array.isArray(response.data))
-          return response.data;
+      transformResponse: (response: unknown) => {
+        if (Array.isArray(response)) return response as Notification[];
+
+        const r = response as { data?: unknown };
+        if (!r?.data) return [];
+
+        if (Array.isArray(r.data)) return r.data as Notification[];
+
+        const rData = r.data as { data?: unknown };
+        if (Array.isArray(rData?.data)) return rData.data as Notification[];
+
         return [];
       },
     }),

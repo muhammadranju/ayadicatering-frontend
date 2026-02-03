@@ -1,17 +1,17 @@
 "use client";
 import { STEPS } from "@/components/pages/home/buildYourMenu/data";
-import { MenuItem } from "@/components/pages/home/buildYourMenu/types";
-import { useGetBuildPackageListQuery } from "@/lib/redux/features/api/buildPackage/buildPackageApiSlice";
 import Stepper from "@/components/pages/home/buildYourMenu/Stepper";
 import StepDateTime from "@/components/pages/home/buildYourMenu/steps/StepDateTime";
 import StepDelivery from "@/components/pages/home/buildYourMenu/steps/StepDelivery";
 import StepMenuSelection from "@/components/pages/home/buildYourMenu/steps/StepMenuSelection";
 import StepPayment from "@/components/pages/home/buildYourMenu/steps/StepPayment";
 import StepSuccess from "@/components/pages/home/buildYourMenu/steps/StepSuccess";
-import React, { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { MenuItem } from "@/components/pages/home/buildYourMenu/types";
+import { useGetBuildPackageListQuery } from "@/lib/redux/features/api/buildPackage/buildPackageApiSlice";
 import { useCreateOrderMutation } from "@/lib/redux/features/api/orders/ordersApiSlice";
 import { useInitiatePaymentMutation } from "@/lib/redux/features/api/payment/paymentApiSlice";
+import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { useGetSetPackageListQuery } from "@/lib/redux/features/api/set-package/setPackageApiSlice";
@@ -311,7 +311,6 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   // ... existing imports ...
 
   // Inside component:
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [createOrder, { isLoading: isSubmitting }] = useCreateOrderMutation();
   const [initiatePayment, { isLoading: isPaymentLoading }] =
     useInitiatePaymentMutation();
@@ -408,11 +407,12 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
         toast.success(t("Order placed successfully!"));
         handleNext();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to process order/payment:", error);
-      toast.error(
-        error?.data?.message || "Failed to place order. Please try again.",
-      );
+      const errorMessage =
+        (error as { data?: { message?: string } })?.data?.message ||
+        "Failed to place order. Please try again.";
+      toast.error(errorMessage);
     }
   };
 

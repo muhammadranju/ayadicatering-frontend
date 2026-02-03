@@ -227,7 +227,7 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
           const hour = parsed.getHours();
           // 9 AM is 9, 8 PM is 20. Allow inclusive range [9, 20]
           return hour >= 9 && hour <= 20;
-        } catch (e) {
+        } catch {
           return false;
         }
       });
