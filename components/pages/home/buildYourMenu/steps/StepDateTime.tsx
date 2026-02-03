@@ -97,7 +97,7 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       const hours = Math.floor(remainingMinutes / 60);
       const mins = remainingMinutes % 60;
       toast.error(
-        `You cannot place another order for this date yet. Please wait ${hours}h ${mins}m.`,
+        `Please wait ${hours}h ${mins}m before placing another order for this date.`,
       );
       return;
     }
@@ -227,7 +227,7 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
           const hour = parsed.getHours();
           // 9 AM is 9, 8 PM is 20. Allow inclusive range [9, 20]
           return hour >= 9 && hour <= 20;
-        } catch {
+        } catch (e) {
           return false;
         }
       });
@@ -237,17 +237,17 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       return filterAllowedHours(TIME_SLOTS); // Show default slots while loading
     }
 
+    // If selected date is blocked
+    if (isDateBlocked(selectedDate)) {
+      return [];
+    }
+
     // If we have specific available slots from backend, use them
     // Note: The backend might return available slots that are already filtered by admin rules
     // But we still need to apply the 5-hour gap rule on the frontend
     if (availableTimeSlotsData?.data) {
       // If available array is provided, use it. If empty, it means no slots.
       return filterAllowedHours(availableTimeSlotsData.data.available || []);
-    }
-
-    // If selected date is blocked
-    if (isDateBlocked(selectedDate)) {
-      return [];
     }
 
     // Otherwise show default time slots
