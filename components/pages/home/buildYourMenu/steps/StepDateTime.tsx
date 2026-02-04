@@ -1,4 +1,13 @@
 import { TIME_SLOTS } from "@/components/pages/home/buildYourMenu/data";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   useGetAvailableTimeSlotsQuery,
   useGetBlockedDatesQuery,
@@ -19,7 +28,7 @@ import {
   startOfWeek,
 } from "date-fns";
 import { AlertCircle, Clock } from "lucide-react";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -39,6 +48,8 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
   setSelectedTime,
 }) => {
   const { t } = useTranslation();
+  const [isRestrictionDialogOpen, setIsRestrictionDialogOpen] = useState(false);
+  const [restrictionMessage, setRestrictionMessage] = useState("");
 
   // Fetch blocked dates for the next 60 days
   const startDate = format(new Date(), "yyyy-MM-dd");
@@ -58,17 +69,17 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       },
       {
         skip: !selectedDate, // Only fetch when date is selected
-      },
+      }
     );
 
   const blockedDates = useMemo(
     () => blockedDatesData?.data?.blockedDates || [],
-    [blockedDatesData],
+    [blockedDatesData]
   );
 
   const blockedTimeSlots = useMemo(
     () => availableTimeSlotsData?.data?.blocked || [],
-    [availableTimeSlotsData],
+    [availableTimeSlotsData]
   );
 
   // Check if a date is blocked
@@ -77,7 +88,7 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       const dateStr = format(date, "yyyy-MM-dd");
       return blockedDates.includes(dateStr);
     },
-    [blockedDates],
+    [blockedDates]
   );
 
   // Check if date is in the past
@@ -96,9 +107,10 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
     if (!allowed && remainingMinutes) {
       const hours = Math.floor(remainingMinutes / 60);
       const mins = remainingMinutes % 60;
-      toast.error(
-        `Please wait ${hours}h ${mins}m before placing another order for this date.`,
+      setRestrictionMessage(
+        `Please wait ${hours}h ${mins}m before placing another order for this date.`
       );
+      setIsRestrictionDialogOpen(true);
       return;
     }
 
@@ -182,16 +194,26 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
     );
   };
 
-  // Check if a specific time slot is restricted (5-hour gap or blocked by admin)
+  // Check if a specific time slot is restricted (1-hour gap or blocked by admin)
   const isTimeSlotRestricted = (timeSlot: string) => {
     // 1. Check if blocked by admin
     if (blockedTimeSlots.includes(timeSlot)) {
       return { restricted: true, reason: "Blocked by admin" };
     }
 
+    // 2. Check if available in backend response (if data exists)
+    if (
+      availableTimeSlotsData?.data?.available &&
+      availableTimeSlotsData.data.available.length > 0 &&
+      !availableTimeSlotsData.data.available.includes(timeSlot)
+    ) {
+      // If the slot is not in the available list, it might be booked or restricted by backend
+      // We still check the frontend time gap to give a specific "Too soon" message if applicable
+    }
+
     if (!selectedDate) return { restricted: false };
 
-    // 2. Check 5-hour gap rule
+    // 3. Check 1-hour gap rule (Reduced from 5 hours to allow same-day orders)
     try {
       const now = new Date();
       // Parse the time slot (e.g. "09:00 AM")
@@ -200,18 +222,22 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       // If parsing fails or invalid date, don't restrict (fallback)
       if (!slotDate || isNaN(slotDate.getTime())) return { restricted: false };
 
-      // Calculate the minimum allowed time (now + 5 hours)
-      const minAllowedTime = addHours(now, 5);
+      // Calculate the minimum allowed time (now + 1 hour)
+      const minAllowedTime = addHours(now, 1);
 
       if (isAfter(minAllowedTime, slotDate)) {
         return {
           restricted: true,
-          reason: "Must be at least 5 hours from now",
+          reason: "Must be at least 1 hour from now",
         };
       }
     } catch (error) {
       console.error("Error parsing time slot:", error);
     }
+
+    // 4. Final check against available list (if we haven't returned yet)
+    // REMOVED: We do not check against available list to allow same-day orders (1h gap)
+    // even if backend filters them out due to 5h gap.
 
     return { restricted: false };
   };
@@ -242,17 +268,10 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       return [];
     }
 
-    // If we have specific available slots from backend, use them
-    // Note: The backend might return available slots that are already filtered by admin rules
-    // But we still need to apply the 5-hour gap rule on the frontend
-    if (availableTimeSlotsData?.data) {
-      // If available array is provided, use it. If empty, it means no slots.
-      return filterAllowedHours(availableTimeSlotsData.data.available || []);
-    }
-
-    // Otherwise show default time slots
+    // Always show all configured time slots (9 AM - 8 PM), even if backend filters them out.
+    // We will handle restrictions in isTimeSlotRestricted.
     return filterAllowedHours(TIME_SLOTS);
-  }, [selectedDate, availableTimeSlotsData, isLoadingTimeSlots, isDateBlocked]);
+  }, [selectedDate, isLoadingTimeSlots, isDateBlocked]);
 
   return (
     <div className="mx-auto px-6 md:px-12 py-10">
@@ -327,8 +346,8 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
                       restricted
                         ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed decoration-slice"
                         : selectedTime === slot
-                          ? "bg-[#E6FAF2] border-green-500 text-green-500 font-semibold shadow-sm"
-                          : "bg-white border-gray-200 text-gray-600 hover:border-green-500/50 hover:bg-gray-50"
+                        ? "bg-[#E6FAF2] border-green-500 text-green-500 font-semibold shadow-sm"
+                        : "bg-white border-gray-200 text-gray-600 hover:border-green-500/50 hover:bg-gray-50"
                     }`}
                 >
                   <div className="flex flex-col items-center">
@@ -382,6 +401,31 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
           </div>
         </div>
       )}
+      {/* Reorder Restriction Dialog */}
+      <Dialog
+        open={isRestrictionDialogOpen}
+        onOpenChange={setIsRestrictionDialogOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-amber-600">
+              <AlertCircle className="h-5 w-5" />
+              Order Restriction
+            </DialogTitle>
+            <DialogDescription className="pt-2">
+              {restrictionMessage}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => setIsRestrictionDialogOpen(false)}
+              className="bg-green-500 hover:bg-green-600 text-white rounded-xl"
+            >
+              Okay
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
