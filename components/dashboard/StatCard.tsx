@@ -16,6 +16,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   title,
   value,
   isDark,
+  trend,
   accentColor,
   icon,
 }) => {
@@ -49,7 +50,10 @@ export const StatCard: React.FC<StatCardProps> = ({
         >
           {title}
         </p>
-        <h3 className="mt-1  text-3xl font-medium">{value}</h3>
+        <h3 className="mt-1  text-3xl font-medium">
+          {value}
+          {trend}
+        </h3>
       </div>
 
       {/* Decorative colored left bar for Dark card to match image style */}

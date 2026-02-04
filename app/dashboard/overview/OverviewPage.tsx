@@ -72,17 +72,16 @@ function OverviewPage() {
         {/* Card 1: Total Revenue (Dark) */}
         <StatCard
           title="Total Revenue"
-          value={Number(stats?.totalRevenue || 0).toFixed(2)}
-          trend="+15.2%"
+          value={Number(stats?.totalRevenue || 0).toFixed(1)}
+          trend="⃁"
           isDark={true}
-          icon={<TrendingUp size={20} className="text-gray-300" />}
+          icon={<TrendingUp size={20} className="text-emerald-500" />}
         />
 
         {/* Card 2: Total Orders */}
         <StatCard
           title="Total Orders"
           value={Number(stats?.totalOrders || 0).toFixed(0)}
-          trend="+8.3%"
           accentColor="#D48D73" // Salmon accent from image
           icon={<ShoppingBag size={20} className="text-[#D48D73]" />}
         />
@@ -91,7 +90,6 @@ function OverviewPage() {
         <StatCard
           title="Confirmed"
           value={Number(stats?.confirmedOrders || 0).toFixed(0)}
-          trend="+12.5%"
           accentColor="#224838" // Green accent
           icon={<CheckCircle2 size={20} className="text-[#224838]" />}
         />
