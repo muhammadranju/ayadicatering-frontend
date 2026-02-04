@@ -1,3 +1,4 @@
+import SmoothScrolling from "@/components/providers/SmoothScrolling";
 import StoreProvider from "@/lib/redux/provider";
 import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
@@ -133,7 +134,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <StoreProvider>
-          {children}
+          <SmoothScrolling>{children}</SmoothScrolling>
           <Toaster
             richColors
             closeButton

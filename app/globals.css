@@ -22,6 +22,10 @@ body {
   color: #857672;
 }
 
+html {
+  /* scroll-behavior: smooth;  <-- Removed to prevent conflict with Lenis */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
