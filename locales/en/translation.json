@@ -133,6 +133,7 @@
     "steps": {
       "menuSelection": "Menu Selection",
       "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
       "securePayment": "Secure Payment",
       "paymentDescription": "You will be redirected to our secure payment gateway to complete your purchase.",
       "payNow": "Pay Now",
