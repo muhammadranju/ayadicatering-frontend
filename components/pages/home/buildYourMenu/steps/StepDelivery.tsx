@@ -6,7 +6,7 @@ import { DeliveryDetails } from "../types";
 
 interface StepDeliveryProps {
   deliveryDetails: DeliveryDetails;
-  setDeliveryDetails: (details: DeliveryDetails) => void;
+  setDeliveryDetails: React.Dispatch<React.SetStateAction<DeliveryDetails>>;
 }
 
 const StepDelivery: React.FC<StepDeliveryProps> = ({
@@ -22,12 +22,18 @@ const StepDelivery: React.FC<StepDeliveryProps> = ({
     lng: number,
     city: string,
     area: string,
+    region: string,
+    postalCode: string,
+    country: string,
     street: string,
   ) => {
     setDeliveryDetails({
       ...deliveryDetails,
       city,
       area,
+      region,
+      postalCode,
+      country,
       street,
     });
     setIsMapOpen(false);

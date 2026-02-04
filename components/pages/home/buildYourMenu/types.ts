@@ -38,6 +38,9 @@ export interface DeliveryDetails {
   street: string;
   city: string;
   area: string;
+  region?: string;
+  country?: string;
+  postalCode?: string;
   whatsapp: string;
   email: string;
   note: string;

@@ -25,6 +25,9 @@ interface MapModalProps {
     lng: number,
     city: string,
     area: string,
+    region: string,
+    postalCode: string,
+    country: string,
     street: string,
   ) => void;
 }
@@ -37,6 +40,9 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
   const [addressData, setAddressData] = useState<{
     city: string;
     area: string;
+    region: string;
+    country: string;
+    postalCode: string;
     street: string;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -109,34 +115,32 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
         addr.city_district,
       );
 
-      // Construct a street address from display name or components
-      // Prefer specific road/house number if available, otherwise fallback to display_name parts
-      let street = getFirst(addr.road, addr.pedestrian, addr.highway);
-      if (addr.house_number) {
-        street = `${addr.house_number} ${street}`;
-      }
-      if (!street) {
-        // Fallback to the first part of display_name which usually contains the most specific detail
-        street = data.display_name ? data.display_name.split(",")[0] : "";
-      }
+      const region = getFirst(
+        addr.state_district,
+        addr.county,
+        addr.region,
+        addr.state,
+      );
+
+      const country =
+        (addr.country_code && addr.country_code.toUpperCase()) ||
+        addr.country ||
+        "";
+
+      const postalCode = addr.postcode || "";
+
+      const street =
+        data.display_name ||
+        getFirst(addr.road, addr.pedestrian, addr.highway) ||
+        "";
 
       setAddressData({
         city: city || "",
         area: area || "",
-        street: street + (data.display_name ? ` (${data.display_name})` : ""), // Append full address for context if needed, or just keep it simple. User wants "real actual address"
-        // Let's refine strictness: User said "real actual address".
-        // Nominatim display_name is usually the full address string.
-        // Let's use display_name as the "Street" value mostly, or combine road + suburb.
-        // Actually, let's just use display_name for the "street" field to be comprehensive,
-        // or just the road? User's field is "Street Address".
-        // Let's stick to using the specific components if found, else display_name.
-      });
-
-      // Update with a cleaner street format
-      setAddressData({
-        city: city || "",
-        area: area || "",
-        street: data.display_name || "",
+        region: region || "",
+        country,
+        postalCode,
+        street,
       });
     } catch (err) {
       console.error("Geocoding error:", err);
@@ -144,6 +148,9 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
       setAddressData({
         city: "",
         area: "",
+        region: "",
+        country: "",
+        postalCode: "",
         street: `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`,
       });
     } finally {
@@ -158,11 +165,23 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, onConfirm }) => {
     // Use fetched data or fallback
     const city = addressData?.city || "Jeddah City";
     const area = addressData?.area || "Jeddah";
+    const region = addressData?.region || "";
+    const postalCode = addressData?.postalCode || "";
+    const country = addressData?.country || "SA";
     const street =
       addressData?.street ||
       `Lat: ${selectedLocation.lat.toFixed(4)}, Lng: ${selectedLocation.lng.toFixed(4)}`;
 
-    onConfirm(selectedLocation.lat, selectedLocation.lng, city, area, street);
+    onConfirm(
+      selectedLocation.lat,
+      selectedLocation.lng,
+      city,
+      area,
+      region,
+      postalCode,
+      country,
+      street,
+    );
   };
 
   return (

@@ -6,7 +6,10 @@ import StepDelivery from "@/components/pages/home/buildYourMenu/steps/StepDelive
 import StepMenuSelection from "@/components/pages/home/buildYourMenu/steps/StepMenuSelection";
 import StepPayment from "@/components/pages/home/buildYourMenu/steps/StepPayment";
 import StepSuccess from "@/components/pages/home/buildYourMenu/steps/StepSuccess";
-import { MenuItem } from "@/components/pages/home/buildYourMenu/types";
+import {
+  DeliveryDetails,
+  MenuItem,
+} from "@/components/pages/home/buildYourMenu/types";
 import { useGetBuildPackageListQuery } from "@/lib/redux/features/api/buildPackage/buildPackageApiSlice";
 import { useCreateOrderMutation } from "@/lib/redux/features/api/orders/ordersApiSlice";
 import { useInitiatePaymentMutation } from "@/lib/redux/features/api/payment/paymentApiSlice";
@@ -64,11 +67,14 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // --- STEP 2: Delivery Details ---
-  const [deliveryDetails, setDeliveryDetails] = useState({
+  const [deliveryDetails, setDeliveryDetails] = useState<DeliveryDetails>({
     name: "",
     street: "",
     city: "",
     area: "",
+    region: "",
+    country: "",
+    postalCode: "",
     whatsapp: "",
     email: "",
     note: "",
@@ -386,9 +392,9 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
             phone: deliveryDetails.whatsapp,
             street: deliveryDetails.street,
             city: deliveryDetails.city,
-            state: deliveryDetails.area,
-            country: "SA",
-            zip: "00000",
+            state: deliveryDetails.region || deliveryDetails.area,
+            country: deliveryDetails.country || "SA",
+            zip: deliveryDetails.postalCode || "00000",
           },
           lang: isArabic ? "ar" : "en",
         };
