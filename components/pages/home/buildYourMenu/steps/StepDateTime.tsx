@@ -1,18 +1,9 @@
 import { TIME_SLOTS } from "@/components/pages/home/buildYourMenu/data";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   useGetAvailableTimeSlotsQuery,
   useGetBlockedDatesQuery,
 } from "@/lib/redux/features/api/deliverySlots/deliverySlotsApiSlice";
-import { isOrderAllowedForDate } from "@/lib/utils/orderStorage";
+import { getLastTimeSlotForDate } from "@/lib/utils/orderStorage";
 import {
   addDays,
   addHours,
@@ -28,9 +19,8 @@ import {
   startOfWeek,
 } from "date-fns";
 import { AlertCircle, Clock } from "lucide-react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 
 interface StepDateTimeProps {
   selectedDate: Date | null;
@@ -48,8 +38,6 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
   setSelectedTime,
 }) => {
   const { t } = useTranslation();
-  const [isRestrictionDialogOpen, setIsRestrictionDialogOpen] = useState(false);
-  const [restrictionMessage, setRestrictionMessage] = useState("");
 
   // Fetch blocked dates for the next 60 days
   const startDate = format(new Date(), "yyyy-MM-dd");
@@ -69,17 +57,17 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       },
       {
         skip: !selectedDate, // Only fetch when date is selected
-      }
+      },
     );
 
   const blockedDates = useMemo(
     () => blockedDatesData?.data?.blockedDates || [],
-    [blockedDatesData]
+    [blockedDatesData],
   );
 
   const blockedTimeSlots = useMemo(
     () => availableTimeSlotsData?.data?.blocked || [],
-    [availableTimeSlotsData]
+    [availableTimeSlotsData],
   );
 
   // Check if a date is blocked
@@ -88,7 +76,7 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
       const dateStr = format(date, "yyyy-MM-dd");
       return blockedDates.includes(dateStr);
     },
-    [blockedDates]
+    [blockedDates],
   );
 
   // Check if date is in the past
@@ -99,21 +87,6 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
   };
 
   const handleDateSelect = (date: Date) => {
-    const dateStr = format(date, "yyyy-MM-dd");
-
-    // Check for same-day reorder restriction
-    const { allowed, remainingMinutes } = isOrderAllowedForDate(dateStr);
-
-    if (!allowed && remainingMinutes) {
-      const hours = Math.floor(remainingMinutes / 60);
-      const mins = remainingMinutes % 60;
-      setRestrictionMessage(
-        `Please wait ${hours}h ${mins}m before placing another order for this date.`
-      );
-      setIsRestrictionDialogOpen(true);
-      return;
-    }
-
     setSelectedDate(date);
   };
 
@@ -194,7 +167,6 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
     );
   };
 
-  // Check if a specific time slot is restricted (1-hour gap or blocked by admin)
   const isTimeSlotRestricted = (timeSlot: string) => {
     // 1. Check if blocked by admin
     if (blockedTimeSlots.includes(timeSlot)) {
@@ -213,31 +185,43 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
 
     if (!selectedDate) return { restricted: false };
 
-    // 3. Check 1-hour gap rule (Reduced from 5 hours to allow same-day orders)
     try {
+      const dateStr = format(selectedDate, "yyyy-MM-dd");
+      const lastTimeSlot = getLastTimeSlotForDate(dateStr);
+
+      if (lastTimeSlot) {
+        const lastSlotDate = parse(lastTimeSlot, "hh:mm a", selectedDate);
+        const blockedSlotDate = addHours(lastSlotDate, 1);
+        const currentSlotDate = parse(timeSlot, "hh:mm a", selectedDate);
+
+        if (
+          !isNaN(blockedSlotDate.getTime()) &&
+          !isNaN(currentSlotDate.getTime()) &&
+          blockedSlotDate.getTime() === currentSlotDate.getTime()
+        ) {
+          return {
+            restricted: true,
+            reason: "One-hour gap after previous order",
+          };
+        }
+      }
+
       const now = new Date();
-      // Parse the time slot (e.g. "09:00 AM")
       const slotDate = parse(timeSlot, "hh:mm a", selectedDate);
 
-      // If parsing fails or invalid date, don't restrict (fallback)
       if (!slotDate || isNaN(slotDate.getTime())) return { restricted: false };
 
-      // Calculate the minimum allowed time (now + 1 hour)
-      const minAllowedTime = addHours(now, 1);
+      const minAllowedTime = addHours(now, 5);
 
       if (isAfter(minAllowedTime, slotDate)) {
         return {
           restricted: true,
-          reason: "Must be at least 1 hour from now",
+          reason: "Must be at least 5 hours from now",
         };
       }
     } catch (error) {
       console.error("Error parsing time slot:", error);
     }
-
-    // 4. Final check against available list (if we haven't returned yet)
-    // REMOVED: We do not check against available list to allow same-day orders (1h gap)
-    // even if backend filters them out due to 5h gap.
 
     return { restricted: false };
   };
@@ -346,8 +330,8 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
                       restricted
                         ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed decoration-slice"
                         : selectedTime === slot
-                        ? "bg-[#E6FAF2] border-green-500 text-green-500 font-semibold shadow-sm"
-                        : "bg-white border-gray-200 text-gray-600 hover:border-green-500/50 hover:bg-gray-50"
+                          ? "bg-[#E6FAF2] border-green-500 text-green-500 font-semibold shadow-sm"
+                          : "bg-white border-gray-200 text-gray-600 hover:border-green-500/50 hover:bg-gray-50"
                     }`}
                 >
                   <div className="flex flex-col items-center">
@@ -401,31 +385,6 @@ const StepDateTime: React.FC<StepDateTimeProps> = ({
           </div>
         </div>
       )}
-      {/* Reorder Restriction Dialog */}
-      <Dialog
-        open={isRestrictionDialogOpen}
-        onOpenChange={setIsRestrictionDialogOpen}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-amber-600">
-              <AlertCircle className="h-5 w-5" />
-              Order Restriction
-            </DialogTitle>
-            <DialogDescription className="pt-2">
-              {restrictionMessage}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              onClick={() => setIsRestrictionDialogOpen(false)}
-              className="bg-green-500 hover:bg-green-600 text-white rounded-xl"
-            >
-              Okay
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
