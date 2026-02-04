@@ -18,16 +18,17 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ayadicatering.com"),
   title: {
-    default: "AYADI Catering | Premium Food Catering Services",
+    default: "AYADI Catering | Effortless Gatherings.",
     template: "%s | AYADI Catering",
   },
   description:
-    "Experience premium food catering with AYADI. We offer bespoke menus, professional service, and unforgettable culinary experiences for weddings, corporate events, and private parties.",
+    "Experience premium food catering with AYADI. We offer bespoke menus, professional service, and unforgettable culinary experiences for weddings, corporate events, and private parties. Effortless gatherings with AYADI Catering.",
   keywords: [
     "Catering",
     "Food Services",
     "Event Catering",
     "Wedding Catering",
+    "Gatherings",
     "Corporate Catering",
     "Build Your Menu",
     "Ayadi Catering",
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "AYADI Catering | Premium Food Catering Services",
+    title: "AYADI Catering | Effortless Gatherings.",
     description:
       "Book your food appointment with ease using our platform. Create your custom menu today.",
     url: "https://www.ayadicatering.com",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
         url: "/bg/login-bg.png", // Ensure this path is correct relative to public
         width: 1200,
         height: 630,
-        alt: "AYADI Catering - Premium Food Services",
+        alt: "AYADI Catering - Effortless Gatherings.",
       },
     ],
     locale: "en_US",
@@ -61,7 +62,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AYADI Catering",
-    description: "Premium food catering services for all occasions.",
+    description:
+      "Premium food catering services for all occasions. Effortless gatherings with AYADI Catering.",
     images: ["/bg/login-bg.png"], // Ensure this path is correct
   },
   robots: {
