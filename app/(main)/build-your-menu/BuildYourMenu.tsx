@@ -368,9 +368,8 @@ const BuildYourMenu: React.FC<BuildYourMenuProps> = ({
     try {
       const orderResponse = await createOrder(bookingData).unwrap();
 
-      // Save order time to localStorage to prevent multiple orders for same date within 5 hours
-      if (selectedDate) {
-        saveOrderTime(format(selectedDate, "yyyy-MM-dd"));
+      if (selectedDate && selectedTime) {
+        saveOrderTime(format(selectedDate, "yyyy-MM-dd"), selectedTime);
       }
 
       // 2. Initiate Payment with the created Order ID
