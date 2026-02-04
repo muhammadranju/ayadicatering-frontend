@@ -2,6 +2,7 @@
 import CTA_SECTION from "@/components/pages/faq/CTA_SECTION";
 import { useGetFaqListQuery } from "@/lib/redux/features/api/faq/faqApiSlice";
 import { Minus, Plus } from "lucide-react";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -38,12 +39,14 @@ const FaqPage: React.FC = () => {
       {/* 1. HERO SECTION */}
       <div className="relative w-full h-[500px] md:h-[600px] lg:h-[800px] overflow-hidden">
         {/* Background Image */}
-        <div
+        <Image
+          objectFit="cover"
+          layout="fill"
+          quality={50}
+          src="/bg/faq-bg.png"
+          alt="FAQ Background"
           className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: 'url("/bg/faq-bg.png")',
-          }}
-        ></div>
+        />
         {/* Dark Overlay for text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
 
