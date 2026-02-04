@@ -1,14 +1,25 @@
 import Image from "next/image";
 import { images } from "./GalleryPage";
 
-export const GalleryImage = ({ imageKey }: { imageKey: string }) => {
+export const GalleryImage = ({
+  imageKey,
+  onClick,
+}: {
+  imageKey: string;
+  onClick?: () => void;
+}) => {
   const image = images[imageKey as keyof typeof images];
   if (!image) return null;
 
   return (
-    <div className="group relative w-full h-full">
+    <div
+      className="group relative w-full h-full cursor-pointer"
+      onClick={onClick}
+    >
       <Image
-        fill
+        objectFit="cover"
+        layout="fill"
+        quality={20}
         src={image.src}
         alt={image.alt}
         className="object-cover rounded-sm shadow-sm"
