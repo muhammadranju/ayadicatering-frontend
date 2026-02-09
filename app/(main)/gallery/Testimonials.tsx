@@ -2,11 +2,15 @@ import { Sparkles } from "lucide-react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
-// --- Testimonials Component ---
 export const Testimonials: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+
   return (
-    <section className="bg-[#403D3D] lg:py-20 md:py-32 lg:pb-40 md:pb-32 pb-20 overflow-hidden">
+    <section
+      className="bg-[#403D3D] lg:py-20 md:py-32 lg:pb-40 md:pb-32 pb-20 overflow-hidden"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
       <div className="container mx-auto px-6 md:px-12">
         {/* Header */}
         <div className="text-center mb-20 relative">
@@ -21,10 +25,17 @@ export const Testimonials: React.FC = () => {
           </h2>
         </div>
 
-        {/* Testimonial 1: Text Left, Image Right */}
-        <div className="flex flex-col md:flex-row items-center gap-12 mb-24 md:mb-32">
-          <div className="w-full md:w-1/2 md:pr-12 order-2 md:order-1 bg-white/10 lg:lg:py-32 py-16 border-l-4 border-orange ">
-            <div className="pl-8 py-2 relative">
+        {/* Testimonial 1 */}
+
+        <div className="flex flex-col items-center gap-12 md:flex-row mb-24 md:mb-32 ">
+          <div
+            className={`w-full h-[500px] md:w-1/2 border-orange bg-white/10 lg:py-32 py-16 ${
+              isArabic
+                ? "border-r-4 md:pr-12 md:pl-0 text-right"
+                : "border-l-4 md:pr-12 md:pl-0"
+            } order-2 md:order-1`}
+          >
+            <div className="pl-8 py-2">
               <p className=" text-xl md:text-2xl text-white italic leading-relaxed mb-8">
                 {t("gallery.testimonials.1.text")}
               </p>
@@ -47,14 +58,14 @@ export const Testimonials: React.FC = () => {
               width={720}
               height={720}
               src="/gallery/11.jpg"
-              alt="Event Setup"
+              alt="Private Estate"
               className="w-full h-full object-cover relative z-10 grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
             />
           </div>
         </div>
 
-        {/* Testimonial 2: Image Left, Text Right */}
-        <div className="flex flex-col md:flex-row items-center gap-12 mb-24 md:mb-32">
+        {/* Testimonial 2 */}
+        <div className="flex flex-col items-center gap-12 mb-24 md:mb-32 md:flex-row">
           <div className="w-full md:w-1/2 h-[400px] md:h-[500px] relative group">
             <div className="absolute inset-0 border border-white/10 -translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
             <Image
@@ -65,7 +76,13 @@ export const Testimonials: React.FC = () => {
               className="w-full h-full object-cover relative z-10 grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
             />
           </div>
-          <div className="w-full md:w-1/2 md:pl-12 border-l-4 border-orange bg-white/10 lg:py-32 py-16">
+          <div
+            className={`w-full h-[500px] md:w-1/2 border-orange bg-white/10 lg:py-32 py-16 ${
+              isArabic
+                ? "border-r-4 md:pr-12 md:pl-0 text-right"
+                : "border-l-4 md:pl-12 md:pr-0"
+            }`}
+          >
             <div className="pl-8 py-2">
               <p className=" text-xl md:text-2xl text-white italic leading-relaxed mb-8">
                 {t("gallery.testimonials.2.text")}
@@ -85,11 +102,17 @@ export const Testimonials: React.FC = () => {
           </div>
         </div>
 
-        {/* Testimonial 3: Text Left, Image Right */}
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="w-full md:w-1/2 md:pr-12 order-2 md:order-1 border-l-4 border-orange bg-white/10 lg:py-32 py-16">
+        {/* Testimonial 3 */}
+        <div className="flex flex-col items-center gap-12 md:flex-row">
+          <div
+            className={`w-full h-[500px] md:w-1/2 border-orange bg-white/10 lg:py-32 py-16 ${
+              isArabic
+                ? "border-r-4 md:pr-12 md:pl-0 text-right"
+                : "border-l-4 md:pr-12 md:pl-0"
+            } order-2 md:order-1`}
+          >
             <div className="pl-8 py-2">
-              <p className=" text-xl md:text-2xl text-white italic leading-relaxed mb-8 w-[80%]">
+              <p className=" text-xl md:text-2xl text-white italic leading-relaxed mb-8">
                 {t("gallery.testimonials.3.text")}
               </p>
               <div className="flex items-center gap-4">
