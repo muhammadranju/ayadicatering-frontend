@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     "Wedding Catering",
     "Gatherings",
     "Corporate Catering",
+    "Md Ranju",
     "Build Your Menu",
     "Ayadi Catering",
     "Food Delivery",
